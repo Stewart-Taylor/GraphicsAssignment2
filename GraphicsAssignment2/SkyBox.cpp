@@ -1,4 +1,4 @@
-/*		SpaceWall Class
+/*		SkyBox lass
  *	AUTHOR: STEWART TAYLOR
  *------------------------------------
  * This class is used as a skybox

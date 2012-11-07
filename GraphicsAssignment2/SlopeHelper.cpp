@@ -10,6 +10,9 @@
 #include "SlopeHelper.h"
 #include <math.h>
 
+
+int size = 65;
+
 SlopeHelper::SlopeHelper(void)
 {
 }
@@ -19,9 +22,9 @@ SlopeHelper::~SlopeHelper(void)
 }
 
 
-float  SlopeHelper::getSlopeValue(int x , int y , GLfloat landsc[65][65])
+float SlopeHelper::getSlopeValue(int x , int y , GLfloat landsc[65][65])
 {
-	size = 65;
+	
 
 	float topLeft = getTopLeftSlope(x, y ,  landsc);
 	float topMid = getTopMiddleSlope(x, y, landsc);

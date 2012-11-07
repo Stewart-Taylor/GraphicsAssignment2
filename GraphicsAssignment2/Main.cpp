@@ -192,7 +192,7 @@ void keyboard (unsigned char key, int x, int y)
 
 	if (key=='b'){ocean.genMap(64);}
 
-	if (key=='g'){terrain.genMap(64);}
+	if (key=='g'){terrain.generateMap(64);}
 	//if (key=='h'){terrain.smoothTerrain(1); terrain.calcSLopes(64);}
 //	if (key=='y'){terrain.errodeCoast(); terrain.calcSLopes(64);}
 	//if (key=='l'){tree.level += 1;}
