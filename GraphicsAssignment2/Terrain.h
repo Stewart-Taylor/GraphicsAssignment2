@@ -16,7 +16,13 @@ public:
 	void getColor(GLfloat color[3], float value);
 	void calculateSlopes(int size);
 	float getSlopeValue(int x , int y);
+	GLuint peakX;
+	GLuint peakY;
+	GLuint peakZ;
 private:
+	void calculateColors(int size);
+	void calculateTextures(int size);
+	void calculateNormals(int size);
 	GLfloat xPosition;
 	GLfloat yPosition;
 	GLfloat zPosition;

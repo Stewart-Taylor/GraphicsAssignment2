@@ -48,16 +48,27 @@ GLfloat mat_specular[] = { specular, specular, specular, 1.0 };
 GLfloat mat_diffuse[] = { diffuse, diffuse, 0.5, 1.0 };
 GLfloat mat_shininess[] = { shiny };
 
+
+void generateMap()
+{
+	terrain.generateMap(64);
+	ocean.genMap(64);
+	particleManager.reset(terrain.peakX,terrain.peakY,terrain.peakZ);
+
+}
+
+
 void setObjects(void)
 {
 	skybox =  SkyBox();
 	plane = Plane();
 	terrain = Terrain(64);
-	particleManager = ParticleManager();
+	particleManager = ParticleManager(0 , 10 , 4); // get from terrain
 	ocean = Ocean(64);
 	tree = LTree(0 ,3 ,0);
 	tree.setAngle(0,90,0);
 	
+	generateMap();
 }
 
 void init (void) 
@@ -148,8 +159,8 @@ void display (void)
 	terrain.display();
 
 
-		ocean.display();
-	//glutSolidSphere(1.0, 100, 100);
+	ocean.display();
+
 	particleManager.display();
 	
 	drawShadows();
@@ -186,13 +197,15 @@ void keyboard (unsigned char key, int x, int y)
 
 
 
+	//if (key=='p'){particleManager.reset(0,0,0);}
+
 	//if (key=='c'){ocean.yPosition += 0.01f;}
 	//if (key=='v'){ocean.yPosition -= 0.01f;}
 	
 
-	if (key=='b'){ocean.genMap(64);}
+//	if (key=='b'){ocean.genMap(64);}
 
-	if (key=='g'){terrain.generateMap(64);}
+	if (key=='g'){generateMap();}
 	//if (key=='h'){terrain.smoothTerrain(1); terrain.calcSLopes(64);}
 //	if (key=='y'){terrain.errodeCoast(); terrain.calcSLopes(64);}
 	//if (key=='l'){tree.level += 1;}

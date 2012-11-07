@@ -27,6 +27,8 @@ GLfloat landsc[64+1][64+1];
 GLfloat slope[64+1][64+1];
 GLfloat cd[64+1];
 GLfloat normals[64+1][64+1][3];
+GLfloat colors[64+1][64+1];
+GLfloat textures[64+1][64+1];
 
 Terrain::Terrain()
 {
@@ -68,9 +70,36 @@ void Terrain::generateMap(int mapSize)
 	TerrainGenerator gen = TerrainGenerator();
 	gen.generateTerrain(landsc);
 
+	peakX = gen.peakX;
+	peakY = gen.peakY;
+	peakZ = gen.peakZ;
+
 	calculateSlopes(mapSize);
+	calculateColors(mapSize);
+	calculateTextures(mapSize);
+	calculateNormals(mapSize);
 }
 
+
+void Terrain::calculateColors(int size)
+{
+
+
+}
+
+
+void Terrain::calculateTextures(int size)
+{
+
+
+}
+
+
+void Terrain::calculateNormals(int size)
+{
+
+
+}
 
 
 void Terrain::calculateSlopes(int size)

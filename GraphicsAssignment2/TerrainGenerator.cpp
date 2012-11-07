@@ -61,11 +61,19 @@ void TerrainGenerator::generateTerrain(float mapGrid[65][65])
 	vPointX += (rand()%10) - (rand()%10) ;
 	vPointY += (rand()%10) - (rand()%10) ;
 
+
+
+	
+
 	int craterSize = (rand()%3 + 3);
 	int poolSize = craterSize - 2;
 	float height =  (rand()%6 + 3);
 	float poolHeight = height - (rand()%craterSize)  -4;
 	int outerSize = ( (rand()%10) + craterSize);
+
+	peakX = vPointX - (craterSize/2) +1;
+	peakZ = vPointY - (craterSize/2) +1;
+	peakY  = height -1;
 
 	int heightJitter = 3;
 
