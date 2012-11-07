@@ -62,7 +62,7 @@ ParticleManager::~ParticleManager(void)
 void ParticleManager::createParticle(int i)
 {
 	 particles[i].x = emitterX + (float)rand()/((float)RAND_MAX/2) - (float)rand()/((float)RAND_MAX/2) ;
-	 particles[i].y = emitterY;
+	 particles[i].y = emitterY  - (float)rand()/((float)RAND_MAX/2);
 	 particles[i].z = emitterZ + (float)rand()/((float)RAND_MAX/2) - (float)rand()/((float)RAND_MAX/2) ;
 	 particles[i].timer = (rand()%100); 
 	 particles[i].limit = 1000;
@@ -87,10 +87,11 @@ void ParticleManager::display(void)
 {
 	
 
-
+	glEnable(GL_COLOR_BUFFER_BIT );
 glEnable(GL_BLEND);
 glBlendFunc(GL_ONE, GL_ONE);
  
+glPushMatrix(); 
 
 	glDisable(GL_DEPTH_TEST);
 	glEnable(GL_TEXTURE_2D); 
@@ -110,7 +111,8 @@ glBlendFunc(GL_ONE, GL_ONE);
 	{
 			glPushMatrix(); 
 
-			glMatrixMode(GL_MODELVIEW);
+		glMatrixMode(GL_MODELVIEW);
+
 
 		glTranslated(particles[i].x ,particles[i].y ,particles[i].z);
 		glTranslated(0,0 ,0);
@@ -137,8 +139,11 @@ glBlendFunc(GL_ONE, GL_ONE);
 		glPopMatrix();
 	}
 
+	glPopMatrix();
+
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_BLEND);
+	glEnable(GL_DEPTH_TEST);
 }
 
 
@@ -155,7 +160,7 @@ void ParticleManager::reset(int x , int y , int z)
 	for(int i = 0; i<1000 ;i++)
 	{
 		particles[i].x = emitterX + (float)rand()/((float)RAND_MAX/2) - (float)rand()/((float)RAND_MAX/2) ;
-		particles[i].y = emitterY + (float)rand()/((float)RAND_MAX/10);
+		particles[i].y = emitterY ;
 		particles[i].z = emitterZ + (float)rand()/((float)RAND_MAX/2) - (float)rand()/((float)RAND_MAX/2) ;
 		particles[i].scale = 0.3;
 	}
@@ -173,12 +178,19 @@ void ParticleManager::update(void)
 		{
 			float perc = particles[i].timer / particles[i].limit;
 
-			if( (particles[i].y > 15) &&  (particles[i].y < 20))
+			if(particles[i].y < emitterY + 3)
+			{
+				particles[i].color[0] =  0.37f;
+				particles[i].color[1] = 0.21f; // (1-perc);
+				particles[i].color[2] = 0.1f; //(1-perc);
+			}
+			else if( (particles[i].y > 15) &&  (particles[i].y < 20))
 			{
 				float perc2 = particles[i].y /80.0f;
 				particles[i].x -=  perc2  * windX;
 				particles[i].z -=  perc2     * windZ;
 			}
+
 			else 
 			{
 				float perc2 = particles[i].y /60.0f;
@@ -190,9 +202,12 @@ void ParticleManager::update(void)
 			particles[i].x += particles[i].direction[0];
 			particles[i].y += particles[i].direction[1];
 			particles[i].z += particles[i].direction[2];
+						if(particles[i].y > 10)
+			{
 			particles[i].color[0] = (1-perc);
-			particles[i].color[1] = (1-perc);
+			particles[i].color[1] =  (1-perc);
 			particles[i].color[2] = (1-perc);
+						}
 			particles[i].color[3] = (1-perc);
 			particles[i].scale += 0.0008f;
 		}
