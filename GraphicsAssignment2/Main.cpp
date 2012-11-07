@@ -1,13 +1,13 @@
-/*		Procedural Generation
+/*	Procedural Generation
  *	AUTHOR: STEWART TAYLOR
  *	DATE STARTED: 31/10/2012
  *------------------------------------
  * This program is part of the Graphics modules second assignment.
  * It demonstrates the use of generating 3D objects procedurally. 
  * 
- * The main class is used as a controler and is also used to set the program up.
+ * The main class is used as a controller and is also used to set the program up.
  *
- * Last Updated: 31/10/2012
+ * Last Updated: 07/10/2012
 */
 
 #define _USE_MATH_DEFINES
@@ -42,9 +42,6 @@ ParticleManager particleManager;
 GLfloat specular = 1.0;
 GLfloat diffuse = 0.5;
 GLfloat shiny = 50.0;
-
-GLfloat orbitTimer  = 9939;
-GLfloat orbitSpeed = 0.001f;
 
 GLfloat light_position[] = { 20.0 , 48.0 ,7.0 , 1.0};
 GLfloat mat_specular[] = { specular, specular, specular, 1.0 };
@@ -143,15 +140,15 @@ void display (void)
 	skybox.display();
 	//glEnable(GL_CULL_FACE);
 
-	//plane.display();
+	plane.display();
 
 
 	
 
-	//terrain.display();
+	terrain.display();
 
 
-	//	ocean.display();
+		ocean.display();
 	//glutSolidSphere(1.0, 100, 100);
 	particleManager.display();
 	

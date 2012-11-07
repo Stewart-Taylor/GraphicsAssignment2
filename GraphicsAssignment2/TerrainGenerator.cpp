@@ -1,3 +1,13 @@
+/*		Terrain Generator
+ *	AUTHOR: STEWART TAYLOR
+ *------------------------------------
+ * This class is used to generate a volcanic terrain island. 
+ * Uses a customer designed algorithm to generate the island
+ *
+ *
+ * Last Updated: 07/11/2012
+*/
+
 #include "TerrainGenerator.h"
 
 #include <windows.h>	
@@ -16,53 +26,40 @@ TerrainGenerator::~TerrainGenerator(void)
 }
 
 
-
-
 void TerrainGenerator::generateTerrain(float mapGrid[65][65])
 {
 	float tempLand[64 + 1][64 + 1];
 	int mapSize = 64;
 
-	  srand(time(0));
+	srand(time(0));
 	int random_seed = rand();
 	srand(random_seed);
 
 
-		for (int i = 0; i <= mapSize; i++)
+	for (int i = 0; i <= mapSize; i++)
+	{
+		for (int j = 0; j <= mapSize; j++)
 		{
-			for (int j = 0; j <= mapSize; j++)
+			int rSize = ((rand()%20)+2);
+
+			if(  (i < rSize) || (j < rSize) || (i > mapSize-rSize - 1) || ( j > mapSize-rSize))
 			{
-				int rSize = ((rand()%20)+2);
-
-				if(  (i < rSize) || (j < rSize) || (i > mapSize-rSize - 1) || ( j > mapSize-rSize))
-				{
-					tempLand[i][j] = -2 -rSize ;
-				//	tempLand[i][j] = -8;
-				}
-				else
-				{
-					tempLand[i][j] = ((rand()%2)) ;
-
-					
-				}
-
+				tempLand[i][j] = -2 -rSize ;
+			}
+			else
+			{
+				tempLand[i][j] = ((rand()%2)) ;		
 			}
 		}
-		smoothTerrain(1 , tempLand );
-
-
-
-
-
-
+	}
+		
+	smoothTerrain(1 , tempLand );
 
 	int vPointX = mapSize /2;
 	int vPointY = mapSize /2;
 
-
 	vPointX += (rand()%10) - (rand()%10) ;
 	vPointY += (rand()%10) - (rand()%10) ;
-
 
 	int craterSize = (rand()%3 + 3);
 	int poolSize = craterSize - 2;
@@ -77,115 +74,69 @@ void TerrainGenerator::generateTerrain(float mapGrid[65][65])
 		poolHeight = 2;
 	}
 
-
 	int jitter = ( (rand()%4) + 1);
 
 
-		for(int x = -outerSize; x < outerSize; x++)
+	for(int x = -outerSize; x < outerSize; x++)
+	{
+		for(int y = -outerSize; y < outerSize; y++)
 		{
-			for(int y = -outerSize; y < outerSize; y++)
-			{
-				float distance = sqrt( pow( (float)((vPointX+x) - vPointX),2)+ (pow( (float)((vPointY+y) - vPointY),2)));
+			float distance = sqrt( pow( (float)((vPointX+x) - vPointX),2)+ (pow( (float)((vPointY+y) - vPointY),2)));
 
 
-				float val = (distance /(outerSize+craterSize + 3));
-				val = (1- val);
-				tempLand[vPointX + x ][vPointY + y] = (height * val) -(rand()%heightJitter ) ;
-			}
+			float val = (distance /(outerSize+craterSize + 3));
+			val = (1- val);
+			tempLand[vPointX + x ][vPointY + y] = (height * val) -(rand()%heightJitter ) ;
 		}
+	}
 
 
-		for(int x = -craterSize; x < craterSize; x++)
+	for(int x = -craterSize; x < craterSize; x++)
+	{
+		for(int y = -craterSize; y < craterSize; y++)
 		{
-			for(int y = -craterSize; y < craterSize; y++)
-			{
-				tempLand[vPointX + x ][vPointY + y] = height + (rand()%heightJitter );
-			}
+			tempLand[vPointX + x ][vPointY + y] = height + (rand()%heightJitter );
 		}
+	}
 		
 
-
-		for(int x = -poolSize; x < poolSize; x++)
+	for(int x = -poolSize; x < poolSize; x++)
+	{
+		for(int y = -poolSize; y < poolSize; y++)
 		{
-			for(int y = -poolSize; y < poolSize; y++)
-			{
-				tempLand[vPointX + x ][vPointY + y] = 1 ;
-			}
+			tempLand[vPointX + x ][vPointY + y] = 1 ;
 		}
+	}
 		
 	smoothTerrain(1 , tempLand);
 
 
-		for (int i = 0; i <= mapSize; i++)
+	for (int i = 0; i <= mapSize; i++)
+	{
+		for (int j = 0; j <= mapSize; j++)
 		{
-			for (int j = 0; j <= mapSize; j++)
-			{
-				int rSize = ((rand()%20)+2);
+			int rSize = ((rand()%20)+2);
 
-				if(  (i < rSize) || (j < rSize) || (i > mapSize-rSize - 1) || ( j > mapSize-rSize))
-				{
+			if(  (i < rSize) || (j < rSize) || (i > mapSize-rSize - 1) || ( j > mapSize-rSize))
+			{
 				//	tempLand[i][j] = -2 -rSize ;
 					tempLand[i][j] = -8;
-				}
-			
-
 			}
 		}
-
-
-
-		for(int i = 0; i < 10 ; i++)
-		{
-			if( (vPointX - i - craterSize) >= 0)
-			{
-				if( (height - i) > 0)
-				{
-			//		landsc[vPointX  + (craterSize/2) ][vPointY  - i + craterSize] =  height - i + (rand()%heightJitter );
-
-			//	landsc[vPointX - i - craterSize ][vPointY ] =  height - i + (rand()%heightJitter );
-				//	landsc[vPointX - i - craterSize ][vPointY -craterSize] =  height - i + (rand()%heightJitter );
-				//	landsc[vPointX - i - craterSize ][vPointY +craterSize] =  height - i + (rand()%heightJitter );
-				}
-			}
-			
-
-		//landsc[vPointX ][vPointY - i ] =  10 - i;
-		//landsc[vPointX - i ][vPointY - i ] =  10 - i;
-
-		
-		}
-
-		for(int i = 0; i < 10 ; i++)
-		{
-			
-
-	//	landsc[vPointX + i + 5][vPointY ] =  10 - i;
-		//	landsc[vPointX + i + 5][vPointY + 1 + 5 ] =  10 - i;
-		
-		
-		}
-
+	}
 
 	smoothTerrain(1 , tempLand);
 		
 	errodeCoast(tempLand);
 
-		int xSize = 0;
-		int ySize = 0;
-
-		for (int x = 0; x <= 64; x++)
+	for (int x = 0; x <= 64; x++)
+	{
+		for (int y = 0; y <= 64; y++)
 		{
-			for (int y = 0; y <= 64; y++)
-			{
-				mapGrid[x][y] = tempLand[x][y];
-			}
+			mapGrid[x][y] = tempLand[x][y];
 		}
+	}
 
-
-		
-
-
-	
 }
 
 
@@ -193,22 +144,17 @@ void TerrainGenerator::errodeCoast(float map[65][65])
 {
 	int size = 64;
 
-		for(int x = 2; x < size -2; x++)
+	for(int x = 2; x < size -2; x++)
+	{
+		for(int y = 2; y < size -2; y++)
 		{
-			for(int y = 2; y < size -2; y++)
+			if( map[x][y] <=1)
 			{
-				if( map[x][y] <=1)
-				{
-					float valCof = 0.1f;
-				map[x][y] =	interpolate(map[x][y], 0,valCof );  //			landsc[x-1][y-1] ;
-
-				}
+				float valCof = 0.1f;
+				map[x][y] =	interpolate(map[x][y], 0,valCof );  
 			}
-
 		}
-
-
-
+	}
 }
 
  GLfloat TerrainGenerator::interpolate(GLfloat a, GLfloat b, float coefficient)
@@ -218,9 +164,9 @@ void TerrainGenerator::errodeCoast(float map[65][65])
 
 
 
-  void TerrainGenerator::smoothTerrain(int passes , float map[65][65])
+ void TerrainGenerator::smoothTerrain(int passes , float map[65][65])
 {
-		int size = 64;
+	int size = 64;
 
 	for(int i =0 ; i < passes ; i++)
 	{
@@ -242,10 +188,8 @@ void TerrainGenerator::errodeCoast(float map[65][65])
 
 				float avg = total / 9;
 				map[x][y] = avg; 
-			//	smoothTile(x,y);
 			}
 		}
-
 	}
 
  }

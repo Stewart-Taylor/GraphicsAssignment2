@@ -1,3 +1,5 @@
+
+
 #include "SlopeHelper.h"
 
 #include <math.h>
