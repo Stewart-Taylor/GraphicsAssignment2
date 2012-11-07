@@ -189,6 +189,7 @@ void keyboard (unsigned char key, int x, int y)
 
 	if (key=='c'){ocean.yPosition += 0.01f;}
 	if (key=='v'){ocean.yPosition -= 0.01f;}
+	
 
 	if (key=='b'){ocean.genMap(64);}
 
@@ -211,6 +212,8 @@ void mouseUpdate(int x , int y)
 void idle(void)
 {
 	//update stuff here
+
+	ocean.update();
 
 	glutPostRedisplay();
 }

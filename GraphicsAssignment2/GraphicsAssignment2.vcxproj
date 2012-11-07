@@ -16,6 +16,7 @@
     <ClInclude Include="Main.h" />
     <ClInclude Include="NormalHelper.h" />
     <ClInclude Include="Ocean.h" />
+    <ClInclude Include="ParticleManager.h" />
     <ClInclude Include="Plane.h" />
     <ClInclude Include="ShadowHelper.h" />
     <ClInclude Include="SkyBox.h" />
@@ -30,6 +31,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="NormalHelper.cpp" />
     <ClCompile Include="Ocean.cpp" />
+    <ClCompile Include="ParticleManager.cpp" />
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="ShadowHelper.cpp" />
     <ClCompile Include="SkyBox.cpp" />

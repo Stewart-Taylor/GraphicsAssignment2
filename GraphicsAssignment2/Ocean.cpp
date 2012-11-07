@@ -44,6 +44,9 @@ Ocean::Ocean(int sizeT)
 	zAngle = 0;
 	scale = 1;
 
+	limit = 200;
+	timer = 0;
+
 	grassTex = TextureLoader::loadTexture("Textures\\grass.bmp");
 	rockTex = TextureLoader::loadTexture("Textures\\rock.bmp");
 	sandTex = TextureLoader::loadTexture("Textures\\sand.bmp");
@@ -310,5 +313,37 @@ void Ocean::drawVertex(int i , int j)
 		  
 	getColor(color , i, j+1);
 	glColor4f(color[0], color[1], color[2], color[3]);  glNormal3fv(&normalst[i][j+1][0]); glTexCoord2f(0,1); glVertex3f(cdss[i],cdss[j+1],-seasc[i][j+1]);
+
+}
+
+
+
+void Ocean::update()
+{
+	timer++;
+
+
+	if( timer <= limit/2)
+	{
+		yPosition -= 0.001f;
+
+	}
+	else if( timer < limit)
+	{
+		yPosition += 0.001f;
+	}
+	else
+	{
+		timer = 0;
+	
+
+			
+	}
+	
+
+	
+
+	
+
 
 }
