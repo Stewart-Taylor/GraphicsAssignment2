@@ -8,7 +8,7 @@ public:
 	GLfloat yPosition;
 	GLfloat zPosition;
 	LTree();
-	LTree(GLfloat x , GLfloat y , GLfloat z );
+	LTree(GLfloat x , GLfloat y , GLfloat z , GLuint texID);
 	~LTree(void);
 	void display(void);
 	void displayShadow(void);

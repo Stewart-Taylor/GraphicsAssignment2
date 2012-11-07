@@ -22,6 +22,7 @@
 #include "Terrain.h"
 #include "Ocean.h"
 #include "ParticleManager.h"
+#include "TextureLoader.h"
 
 #include <math.h>
 #include <stdlib.h>
@@ -56,12 +57,14 @@ LTree trees[800];
 
 void generateForest()
 {
+	GLuint treeTexID = TextureLoader::loadTexture("Textures\\palm.bmp");
+
 	for(int i = 0 ; i < 800 ; i++)
 	{
 		int x = ((rand()%20) - (rand()%20));
 		int y = -4;
 		int z = ((rand()%20) - (rand()%20));
-		trees[i] = LTree(x,y,z);
+		trees[i] = LTree(x,y,z ,treeTexID);
 
 	}
 
@@ -84,7 +87,7 @@ void generateForest()
 						float zPos = y + (float)rand()/((float)RAND_MAX/0.5f) - (float)rand()/((float)RAND_MAX/0.5f) ;
 						float yPos = terrain.landsc[x][y];
 
-						trees[treeCounter] = LTree(xPos,yPos,zPos);
+						trees[treeCounter] = LTree(xPos,yPos,zPos ,treeTexID);
 						treeCounter++;
 					}
 				}
@@ -111,7 +114,6 @@ void setObjects(void)
 	terrain = Terrain(64);
 	particleManager = ParticleManager(0 , 10 , 4); // get from terrain
 	ocean = Ocean(64);
-	tree = LTree(0 ,0 ,0);
 	tree.setAngle(0,90,0);
 	
 	generateMap();

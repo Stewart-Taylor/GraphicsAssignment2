@@ -29,7 +29,7 @@ LTree::LTree()
 }
 
 
-LTree::LTree(GLfloat x , GLfloat y , GLfloat z)
+LTree::LTree(GLfloat x , GLfloat y , GLfloat z , GLuint texID)
 {
 	xPosition = x;
 	yPosition = y;
@@ -39,11 +39,11 @@ LTree::LTree(GLfloat x , GLfloat y , GLfloat z)
 	zAngle = 0;
 	scale = 0.3f;
 	level = 1;
-	texName = TextureLoader::loadTexture("Textures\\steel.bmp");
+	
+	texName = texID;
 
 
-
-	height = (rand()%12);
+	height = (rand()% 5) + 3;
 
 }
 
@@ -142,31 +142,31 @@ void LTree::tree(int level, int leaves)
 
 				glBegin(GL_TRIANGLES);	
 				glNormal3f(0.0f, 1.0f, 1.0f);
-				glColor3f(0.22, 0.85, 0.1); glVertex3f( 0.0f, -0.8 + height, 0.6f);		// Top
-				glColor3f(0.22, 0.25, 0.1); glVertex3f(-1.0f, 0.2 + height, 0.0f);		// Bottom Left
-				glColor3f(0.32, 0.45, 0.1); glVertex3f( 1.0f, 0.14 + height, 0.0f);		// Bottom Right
+			glTexCoord2f(0.0, 0.0);	glColor3f(0.22, 0.85, 0.1); glVertex3f( 0.0f, -0.8 + height, 0.6f);		// Top
+			glTexCoord2f(1.0, 0.0);	glColor3f(0.22, 0.25, 0.1); glVertex3f(-1.0f, 0.2 + height, 0.0f);		// Bottom Left
+			glTexCoord2f(0.0, 1.0);	glColor3f(0.32, 0.45, 0.1); glVertex3f( 1.0f, 0.14 + height, 0.0f);		// Bottom Right
 				glEnd();	
 
 				glBegin(GL_TRIANGLES);		
-				glNormal3f(0.0f, 1.0f, 1.0f);
-				glColor3f(0.22, 0.85, 0.1); glVertex3f( 0.0f, -0.4 + height, -0.6f);		// Top
-				glColor3f(0.22, 0.25, 0.1); glVertex3f(-1.0f, 0.3 + height, 0.0f);		// Bottom Left
-				glColor3f(0.32, 0.45, 0.1); glVertex3f( 1.0f, 0.12 + height, 0.0f);		// Bottom Right
+				 glNormal3f(0.0f, 1.0f, 1.0f);
+			glTexCoord2f(0.0, 0.0);	glColor3f(0.22, 0.85, 0.1); glVertex3f( 0.0f, -0.4 + height, -0.6f);		// Top
+			glTexCoord2f(1.0, 0.0);	glColor3f(0.22, 0.25, 0.1); glVertex3f(-1.0f, 0.3 + height, 0.0f);		// Bottom Left
+			glTexCoord2f(0.0, 1.0);	glColor3f(0.32, 0.45, 0.1); glVertex3f( 1.0f, 0.12 + height, 0.0f);		// Bottom Right
 				glEnd();	
 
 				glBegin(GL_TRIANGLES);
 				glNormal3f(1.0f, 1.0f, 0.0f);
-				glColor3f(0.22, 0.85, 0.1); glVertex3f( -0.6f, -0.9 + height, -0.0f);		// Top
-				glColor3f(0.22, 0.25, 0.1); glVertex3f(0.0f, 0.14 + height, -1.0f);		// Bottom Left
-				glColor3f(0.32, 0.45, 0.1); glVertex3f( 0.0f, 0.11 + height, 1.0f);		// Bottom Right
+			glTexCoord2f(0.0, 0.0);	glColor3f(0.22, 0.85, 0.1); glVertex3f( -0.6f, -0.9 + height, -0.0f);		// Top
+			glTexCoord2f(1.0, 0.0);	glColor3f(0.22, 0.25, 0.1); glVertex3f(0.0f, 0.14 + height, -1.0f);		// Bottom Left
+			glTexCoord2f(0.0, 1.0);	glColor3f(0.32, 0.45, 0.1); glVertex3f( 0.0f, 0.11 + height, 1.0f);		// Bottom Right
 				glEnd();
 
 
 				glBegin(GL_TRIANGLES);	
 				glNormal3f(1.0f, 1.0f, 0.0f);
-				glColor3f(0.22, 0.85, 0.1); glVertex3f( 0.6f, -0.6 + height, -0.0f);		// Top
-				glColor3f(0.22, 0.25, 0.1); glVertex3f(0.0f, 0.14 + height, 1.0f);		// Bottom Left
-				glColor3f(0.32, 0.45, 0.1); glVertex3f( 0.0f, 0.12 + height, -1.0f);		// Bottom Right
+			glTexCoord2f(0.0, 0.0);	glColor3f(0.22, 0.85, 0.1); glVertex3f( 0.6f, -0.6 + height, -0.0f);		// Top
+			glTexCoord2f(1.0, 0.0);	glColor3f(0.22, 0.25, 0.1); glVertex3f(0.0f, 0.14 + height, 1.0f);		// Bottom Left
+			glTexCoord2f(0.0, 1.0);	glColor3f(0.32, 0.45, 0.1); glVertex3f( 0.0f, 0.12 + height, -1.0f);		// Bottom Right
 				glEnd();
 
 
