@@ -13,6 +13,7 @@ public:
 	void display(void);
 	void displayShadow(void);
 	void tree(int level, int leaves);
+	void drawLeaf(int level, int leaves);
 	void setAngle(GLfloat xAngleT , GLfloat yAngleT , GLfloat zAngleT);
 	void setPosition(GLfloat xPositionT , GLfloat yPositionT , GLfloat zPositionT);
 	void spin(GLfloat speed);
@@ -22,4 +23,5 @@ private:
 	GLfloat xAngle;
 	GLfloat yAngle;
 	GLfloat zAngle;
+	GLfloat height;
 };

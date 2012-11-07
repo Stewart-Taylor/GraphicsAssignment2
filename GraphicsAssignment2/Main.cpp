@@ -49,12 +49,58 @@ GLfloat mat_diffuse[] = { diffuse, diffuse, 0.5, 1.0 };
 GLfloat mat_shininess[] = { shiny };
 
 
+
+LTree trees[800];
+
+
+
+void generateForest()
+{
+	for(int i = 0 ; i < 800 ; i++)
+	{
+		int x = ((rand()%20) - (rand()%20));
+		int y = -4;
+		int z = ((rand()%20) - (rand()%20));
+		trees[i] = LTree(x,y,z);
+
+	}
+
+
+	int treeCounter = 0;
+	for(int x = 0 ; x < 64 ; x++)
+	{
+		for(int y =0; y< 64 ; y++)
+		{
+			if(( terrain.landsc[x][y] < 2.0f) )
+			{
+			if(terrain.textures[x][y] == terrain.grassTex)
+			{
+				if(treeCounter < 800)
+				{
+					for(int i = 0 ; i < 2 ; i++)
+					{
+
+						float xPos = x + (float)rand()/((float)RAND_MAX/0.5f) - (float)rand()/((float)RAND_MAX/0.5f) ;
+						float zPos = y + (float)rand()/((float)RAND_MAX/0.5f) - (float)rand()/((float)RAND_MAX/0.5f) ;
+						float yPos = terrain.landsc[x][y];
+
+						trees[treeCounter] = LTree(xPos,yPos,zPos);
+						treeCounter++;
+					}
+				}
+			}
+			}
+		}
+	}
+
+}
+
 void generateMap()
 {
 	terrain.generateMap(64);
 	ocean.genMap(64);
 	particleManager.reset(terrain.peakX,terrain.peakY,terrain.peakZ);
-
+	 generateForest();
 }
 
 
@@ -65,7 +111,7 @@ void setObjects(void)
 	terrain = Terrain(64);
 	particleManager = ParticleManager(0 , 10 , 4); // get from terrain
 	ocean = Ocean(64);
-	tree = LTree(0 ,3 ,0);
+	tree = LTree(0 ,0 ,0);
 	tree.setAngle(0,90,0);
 	
 	generateMap();
@@ -151,7 +197,7 @@ void display (void)
 	skybox.display();
 	//glEnable(GL_CULL_FACE);
 
-	plane.display();
+	//plane.display();
 
 
 	
@@ -159,14 +205,24 @@ void display (void)
 	terrain.display();
 
 
-	ocean.display();
+//	ocean.display();
 
-	particleManager.display();
+//	particleManager.display();
+
+
+	for(int i = 0 ; i < 800 ; i++)
+	{
+		if(trees[i].yPosition != -4)
+		{
+		trees[i].display();
+		}
+	}
 	
-	drawShadows();
+//	drawShadows();
 	
 	//draw objects here
-	//tree.display();
+	
+	
 
 	glutSwapBuffers();
 }

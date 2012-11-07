@@ -23,12 +23,7 @@
 #include <time.h>
   
 
-GLfloat landsc[64+1][64+1];
-GLfloat slope[64+1][64+1];
-GLfloat cd[64+1];
-GLfloat normals[64+1][64+1][3];
-GLfloat colors[64+1][64+1];
-GLfloat textures[64+1][64+1];
+
 
 Terrain::Terrain()
 {
@@ -90,7 +85,13 @@ void Terrain::calculateColors(int size)
 
 void Terrain::calculateTextures(int size)
 {
-
+	for(int x = 0 ; x < 64 ; x++)
+	{
+		for(int y =0; y< 64 ; y++)
+		{
+			textures[x][y] = getTextureValue( x ,  y);
+		}
+	}
 
 }
 
@@ -149,6 +150,47 @@ void Terrain::getTexture(int x , int y)
 	if( landsc[x][y] >= 4 )
 	{
 		glBindTexture(GL_TEXTURE_2D, rockTex);
+	}
+}
+
+
+
+GLfloat Terrain::getTextureValue(int x , int y)
+{
+	if(slope[x][y] < 0.4f)
+	{
+		if( landsc[x][y] < 0.2f)
+		{
+			return sandTex;
+		}
+		else
+		{
+			return grassTex;
+		}
+	}
+	else if (slope[x][y] < 1.0f)
+	{
+		if( landsc[x][y] < 0.2f)
+		{
+			return rockTex;
+		}
+		else if ( landsc[x][y]  > 4)
+		{
+			return grassTex;
+		}
+		else
+		{
+			return rockTex;
+		}
+	}
+	else 
+	{
+		return rockTex;
+	}
+
+	if( landsc[x][y] >= 4 )
+	{
+		return rockTex;
 	}
 }
 
