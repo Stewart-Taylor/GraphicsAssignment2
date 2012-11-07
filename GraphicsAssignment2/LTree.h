@@ -11,13 +11,12 @@ public:
 	LTree(GLfloat x , GLfloat y , GLfloat z , GLuint texID);
 	~LTree(void);
 	void display(void);
-	void displayShadow(void);
-	void tree(int level, int leaves);
-	void drawLeaf(int level, int leaves);
+	void tree();
 	void setAngle(GLfloat xAngleT , GLfloat yAngleT , GLfloat zAngleT);
 	void setPosition(GLfloat xPositionT , GLfloat yPositionT , GLfloat zPositionT);
 	void spin(GLfloat speed);
 private:
+	GLuint leaves;
 	GLfloat scale;
 	GLuint texName;
 	GLfloat xAngle;

@@ -157,6 +157,11 @@ void Terrain::getTexture(int x , int y)
 
 GLfloat Terrain::getTextureValue(int x , int y)
 {
+
+
+
+
+
 	if(slope[x][y] < 0.4f)
 	{
 		if( landsc[x][y] < 0.2f)

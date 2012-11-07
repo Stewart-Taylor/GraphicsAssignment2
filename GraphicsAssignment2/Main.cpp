@@ -55,6 +55,38 @@ LTree trees[800];
 
 
 
+bool isPeak(int x , int y)
+{
+	if ( (x  < 10) || ( x > 50))
+	{
+		return false;
+	}
+
+	if ( (y  < 10) || ( y > 50))
+	{
+		return false;
+	}
+
+	int xT = x;
+	int yT = y;
+
+	for(int iX = -4; iX < 4 ; iX++)
+	{
+		for(int iY = -4; iY < 4 ; iY++)
+		{
+			if( (xT +iX == terrain.peakX) && (yT + iY == terrain.peakZ))
+			{
+				return true;
+			}
+		}
+	}
+	
+
+	return false;
+}
+
+
+
 void generateForest()
 {
 	GLuint treeTexID = TextureLoader::loadTexture("Textures\\palm.bmp");
@@ -68,27 +100,30 @@ void generateForest()
 
 	}
 
-
 	int treeCounter = 0;
-	for(int x = 0 ; x < 64 ; x++)
+
+	for(int x = 10 ; x < 50 ; x++)
 	{
-		for(int y =0; y< 64 ; y++)
+		for(int y =10; y< 50 ; y++)
 		{
-			if(( terrain.landsc[x][y] < 2.0f) )
+			if( isPeak(x,y) == false)
 			{
-			if(terrain.textures[x][y] == terrain.grassTex)
+			if(( terrain.landsc[x][y] < 2.0f) && ( terrain.landsc[x][y] > 0.7f) )
 			{
-				if(treeCounter < 800)
+				if( (terrain.textures[x][y] == terrain.grassTex) || ( terrain.landsc[x][y] < 4.0f) )
 				{
-					for(int i = 0 ; i < 2 ; i++)
+					if(treeCounter < 800)
 					{
+						for(int i = 0 ; i < 2 ; i++)
+						{
 
-						float xPos = x + (float)rand()/((float)RAND_MAX/0.5f) - (float)rand()/((float)RAND_MAX/0.5f) ;
-						float zPos = y + (float)rand()/((float)RAND_MAX/0.5f) - (float)rand()/((float)RAND_MAX/0.5f) ;
-						float yPos = terrain.landsc[x][y];
+							float xPos = x + (float)rand()/((float)RAND_MAX/0.5f) - (float)rand()/((float)RAND_MAX/0.5f) ;
+							float zPos = y + (float)rand()/((float)RAND_MAX/0.5f) - (float)rand()/((float)RAND_MAX/0.5f) ;
+							float yPos = terrain.landsc[x][y];
 
-						trees[treeCounter] = LTree(xPos,yPos,zPos ,treeTexID);
-						treeCounter++;
+							trees[treeCounter] = LTree(xPos,yPos,zPos ,treeTexID);
+							treeCounter++;
+						}
 					}
 				}
 			}
@@ -103,7 +138,7 @@ void generateMap()
 	terrain.generateMap(64);
 	ocean.genMap(64);
 	particleManager.reset(terrain.peakX,terrain.peakY,terrain.peakZ);
-	 generateForest();
+	generateForest();
 }
 
 
@@ -112,7 +147,7 @@ void setObjects(void)
 	skybox =  SkyBox();
 	plane = Plane();
 	terrain = Terrain(64);
-	particleManager = ParticleManager(0 , 10 , 4); // get from terrain
+	particleManager = ParticleManager(0 , 0 , 0); 
 	ocean = Ocean(64);
 	tree.setAngle(0,90,0);
 	
@@ -130,35 +165,6 @@ void init (void)
 	glEnable(GL_TEXTURE_2D);
 
 	setObjects();
-}
-
-
-
-
-
-
-
-void drawShadows()
-{
-	GLfloat shadow_proj[16];
-	glDisable(GL_TEXTURE_2D);
-	glDisable(GL_LIGHTING);
-	glDisable(GL_DEPTH_TEST);
-	glEnable(GL_BLEND);
-	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-	glPushMatrix();
-    GLfloat plane_eq[] = {0.0, 1.0, 0.0, 0.0};
-	ShadowHelper::shadow_matrix(light_position,plane_eq,shadow_proj);
-	glMultMatrixf(shadow_proj);
-
-	//draw code here
-
-	glPopMatrix();
-
-	glDisable(GL_BLEND);
-	glEnable(GL_DEPTH_TEST);
-    glEnable(GL_LIGHTING);
 }
 
 
@@ -181,7 +187,6 @@ void display (void)
 	glClearColor (0.0, 0.0, 0.0, 0.0);
 	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glShadeModel (GL_SMOOTH);
-	//glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );  // WIREFRAME
 
 	displayFog();
 
@@ -197,35 +202,21 @@ void display (void)
 
 	glDisable(GL_CULL_FACE);
 	skybox.display();
-	//glEnable(GL_CULL_FACE);
-
-	//plane.display();
-
-
 	
 
+	plane.display();
 	terrain.display();
-
-
-//	ocean.display();
-
-//	particleManager.display();
-
+	ocean.display();
+	particleManager.display();
 
 	for(int i = 0 ; i < 800 ; i++)
 	{
-		if(trees[i].yPosition != -4)
+		if(trees[i].yPosition != -4) // only draws assigned trees - 4 is default not assigned 
 		{
-		trees[i].display();
+			trees[i].display();
 		}
 	}
 	
-//	drawShadows();
-	
-	//draw objects here
-	
-	
-
 	glutSwapBuffers();
 }
 
@@ -277,12 +268,8 @@ void mouseUpdate(int x , int y)
 
 
 
-
-
 void idle(void)
 {
-	//update stuff here
-
 	ocean.update();
 	particleManager.update();
 
