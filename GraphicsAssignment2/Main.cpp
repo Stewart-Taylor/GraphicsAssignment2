@@ -21,6 +21,7 @@
 #include "LTree.h"
 #include "Terrain.h"
 #include "Ocean.h"
+#include "ParticleManager.h"
 
 #include <math.h>
 #include <stdlib.h>
@@ -36,7 +37,7 @@ Plane plane;
 Ocean ocean;
 LTree tree;
 Terrain terrain ;
-
+ParticleManager particleManager;
 
 GLfloat specular = 1.0;
 GLfloat diffuse = 0.5;
@@ -55,6 +56,7 @@ void setObjects(void)
 	skybox =  SkyBox();
 	plane = Plane();
 	terrain = Terrain(64);
+	particleManager = ParticleManager();
 	ocean = Ocean(64);
 	tree = LTree(0 ,3 ,0);
 	tree.setAngle(0,90,0);
@@ -141,17 +143,17 @@ void display (void)
 	skybox.display();
 	//glEnable(GL_CULL_FACE);
 
-	plane.display();
+	//plane.display();
 
 
 	
 
-	terrain.display();
+	//terrain.display();
 
 
-		ocean.display();
+	//	ocean.display();
 	//glutSolidSphere(1.0, 100, 100);
-	
+	particleManager.display();
 	
 	drawShadows();
 	
@@ -214,6 +216,7 @@ void idle(void)
 	//update stuff here
 
 	ocean.update();
+	particleManager.update();
 
 	glutPostRedisplay();
 }

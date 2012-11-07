@@ -325,12 +325,12 @@ void Ocean::update()
 
 	if( timer <= limit/2)
 	{
-		yPosition -= 0.001f;
+		yPosition -= 0.0005f;
 
 	}
 	else if( timer < limit)
 	{
-		yPosition += 0.001f;
+		yPosition += 0.0005f;
 	}
 	else
 	{
