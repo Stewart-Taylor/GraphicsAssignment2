@@ -1,9 +1,9 @@
-/*		TableSurface CLASS
+/*		Plane CLASS
  *	AUTHOR: STEWART TAYLOR
  *------------------------------------
- * Generates a blue plane with graident and surface normals.
+ * Generates a blue plane with graident and surface normals.Updated to simulate basic ocean
  * 
- * Last Updated: 24/10/2012
+ * Last Updated: 05/10/2012
 */
 
 #include "Plane.h"

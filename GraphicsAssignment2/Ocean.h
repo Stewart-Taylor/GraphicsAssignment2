@@ -17,7 +17,7 @@ public:
 	void getColor(GLfloat color[4], int x , int y);
 	void smooth(int passes , float map[65][65]);
 	void update();
-	int timer;
+	GLfloat timer;
 	int limit;
 private:
 	GLfloat xPosition;

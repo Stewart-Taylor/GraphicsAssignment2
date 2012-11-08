@@ -7,7 +7,7 @@
  * 
  * The main class is used as a controller and is also used to set the program up.
  *
- * Last Updated: 07/10/2012
+ * Last Updated: 08/11/2012
 */
 
 #define _USE_MATH_DEFINES

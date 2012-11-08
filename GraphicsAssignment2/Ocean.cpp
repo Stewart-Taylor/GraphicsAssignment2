@@ -19,6 +19,7 @@
   
 
 GLfloat seasc[64+1][64+1];
+GLfloat seascO[64+1][64+1];
 GLfloat cdss[64+1];
 GLfloat normalst[64+1][64+1][3];
 
@@ -69,12 +70,9 @@ void Ocean::genMap(int mapSize)
 
 			if(  (i < rSize) || (j < rSize) || (i > mapSize-rSize - 1) || ( j > mapSize-rSize))
 			{
-				seasc[i][j] = -1 ;
+				seasc[i][j] = (float)rand()/((float)RAND_MAX/2.11f);
 			}
-			else
-			{
-				seasc[i][j] = (float)rand()/((float)RAND_MAX/0.1f);
-			}
+			seascO[i][j] = seasc[i][j];
 		}
 	}
 
@@ -131,6 +129,7 @@ void Ocean::getColor(GLfloat color[4], int x , int y)
 	float a = (1-perc) ;
 
 	color[0] = r; color[1] = g; color[2] = b; color[3] = a;  
+
 }
 
 
@@ -237,21 +236,20 @@ void Ocean::drawVertex(int i , int j)
 
 void Ocean::update()
 {
-	timer++;
+	timer+= 0.008f;
 
-
-	if( timer <= limit/2)
+	for (int i = 0; i <= 64; i++)
 	{
-		yPosition -= 0.0005f;
-
-	}
-	else if( timer < limit)
-	{
-		yPosition += 0.0005f;
-	}
-	else
-	{
-		timer = 0;		
+		for (int j = 0; j <= 64; j++)
+		{
+		
+			GLfloat val1 = 0.1f *sin((float)(i+ timer))  ;
+			GLfloat val2 = 0.3f *sin((float)(j+ (timer*2)))  ;
+			GLfloat val3 = 0.3f *sin((float)(seascO[i][j] + timer) ) ;
+		
+			GLfloat valF = val1 + val2 + val3;
+			seasc[i][j]  =valF - 0.4f ;
+		}
 	}
 
 }
