@@ -21,6 +21,7 @@
 #include "LTree.h"
 #include "Terrain.h"
 #include "Ocean.h"
+#include "Shrub.h"
 #include "ParticleManager.h"
 #include "TextureLoader.h"
 
@@ -44,7 +45,7 @@ GLfloat specular = 1.0;
 GLfloat diffuse = 0.5;
 GLfloat shiny = 50.0;
 
-GLfloat light_position[] = { 20.0 , 48.0 ,7.0 , 1.0};
+GLfloat light_position[] = { 56.0 , 20.0 ,9.0 , 1.0};
 GLfloat mat_specular[] = { specular, specular, specular, 1.0 };
 GLfloat mat_diffuse[] = { diffuse, diffuse, 0.5, 1.0 };
 GLfloat mat_shininess[] = { shiny };
@@ -52,7 +53,7 @@ GLfloat mat_shininess[] = { shiny };
 
 
 LTree trees[800];
-
+Shrub shrubs[1200];
 
 
 bool isPeak(int x , int y)
@@ -133,12 +134,59 @@ void generateForest()
 
 }
 
+
+
+void generateShrubs()
+{
+	GLuint treeTexID = TextureLoader::loadTexture("Textures\\shrub.bmp");
+
+	for(int i = 0 ; i < 1200 ; i++)
+	{
+		int x = ((rand()%20) - (rand()%20));
+		int y = -4;
+		int z = ((rand()%20) - (rand()%20));
+		shrubs[i] = Shrub(x,y,z ,treeTexID);
+
+	}
+
+	int treeCounter = 0;
+
+	for(int x = 10 ; x < 50 ; x++)
+	{
+		for(int y =10; y< 50 ; y++)
+		{
+			if( isPeak(x,y) == false)
+			{
+			if(( terrain.landsc[x][y] < 2.0f) && ( terrain.landsc[x][y] > 0.4f) )
+			{
+					if(treeCounter < 1200)
+					{
+						for(int i = 0 ; i < 5 ; i++)
+						{
+
+							float xPos = x + (float)rand()/((float)RAND_MAX/0.5f) - (float)rand()/((float)RAND_MAX/0.5f) ;
+							float zPos = y + (float)rand()/((float)RAND_MAX/0.5f) - (float)rand()/((float)RAND_MAX/0.5f) ;
+							float yPos = terrain.landsc[x][y];
+
+							shrubs[treeCounter] = Shrub(xPos,yPos,zPos ,treeTexID);
+							treeCounter++;
+						}
+					}
+				
+			}
+			}
+		}
+	}
+
+}
+
 void generateMap()
 {
 	terrain.generateMap(64);
 	ocean.genMap(64);
 	particleManager.reset(terrain.peakX,terrain.peakY,terrain.peakZ);
 	generateForest();
+	generateShrubs();
 }
 
 
@@ -214,6 +262,15 @@ void display (void)
 		if(trees[i].yPosition != -4) // only draws assigned trees - 4 is default not assigned 
 		{
 			trees[i].display();
+		}
+	}
+
+
+	for(int i = 0 ; i < 1200 ; i++)
+	{
+		if(shrubs[i].yPosition != -4) // only draws assigned trees - 4 is default not assigned 
+		{
+			shrubs[i].display();
 		}
 	}
 	

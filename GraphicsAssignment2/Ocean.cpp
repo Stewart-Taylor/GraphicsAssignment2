@@ -46,6 +46,8 @@ Ocean::Ocean(int size)
 		cdss[x] = x;
 	}
 
+	texName = TextureLoader::loadTexture("Textures\\ocean.bmp");
+
 	genMap(size);
 }
 
@@ -148,6 +150,9 @@ void Ocean::display(void)
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+	glEnable(GL_TEXTURE_2D); 
+	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE,  GL_MODULATE);
+	glBindTexture(GL_TEXTURE_2D, texName);
 
 	glMatrixMode(GL_MODELVIEW);
 

@@ -120,7 +120,7 @@ void Terrain::getTexture(int x , int y)
 	{
 		if( landsc[x][y] < 0.2f)
 		{
-			glBindTexture(GL_TEXTURE_2D, sandTex);
+			glBindTexture(GL_TEXTURE_2D, grassTex);
 		}
 		else
 		{

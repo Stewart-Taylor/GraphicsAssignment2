@@ -19,6 +19,7 @@
     <ClInclude Include="ParticleManager.h" />
     <ClInclude Include="Plane.h" />
     <ClInclude Include="ShadowHelper.h" />
+    <ClInclude Include="Shrub.h" />
     <ClInclude Include="SkyBox.h" />
     <ClInclude Include="SlopeHelper.h" />
     <ClInclude Include="Terrain.h" />
@@ -34,6 +35,7 @@
     <ClCompile Include="ParticleManager.cpp" />
     <ClCompile Include="Plane.cpp" />
     <ClCompile Include="ShadowHelper.cpp" />
+    <ClCompile Include="Shrub.cpp" />
     <ClCompile Include="SkyBox.cpp" />
     <ClCompile Include="SlopeHelper.cpp" />
     <ClCompile Include="Terrain.cpp" />

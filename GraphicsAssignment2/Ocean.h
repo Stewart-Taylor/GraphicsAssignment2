@@ -20,6 +20,7 @@ public:
 	GLfloat timer;
 	int limit;
 private:
+	GLuint texName;
 	GLfloat xPosition;
 	GLfloat yPosition;
 	GLfloat zPosition;
