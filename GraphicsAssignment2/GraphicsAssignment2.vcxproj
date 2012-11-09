@@ -19,6 +19,7 @@
     <ClInclude Include="Ocean.h" />
     <ClInclude Include="ParticleManager.h" />
     <ClInclude Include="Plane.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="ShadowHelper.h" />
     <ClInclude Include="Shrub.h" />
     <ClInclude Include="SkyBox.h" />
@@ -43,6 +44,12 @@
     <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="TerrainGenerator.cpp" />
     <ClCompile Include="TextureLoader.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GraphicsAssignment2.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icon1.ico" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{87598441-F98D-42F7-BB4A-6856707BDBEF}</ProjectGuid>
