@@ -9,9 +9,9 @@ public:
 	~ParticleManager(void);
 	void display(void);
 	void update(void);
-	void createParticle(int i);
 	void reset(int x , int y , int z);
 private:
+	void createParticle(int i);
 	GLuint texName;
 	GLuint emitterX;
 	GLuint emitterY;

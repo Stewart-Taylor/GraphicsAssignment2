@@ -4,14 +4,12 @@
  * This class is used to generate the smoke from a volcano
  * It also simulates wind
  *
- * Last Updated: 07/11/2012
+ * Last Updated: 09/11/2012
 */
 
 #include "ParticleManager.h"
 #include "TextureLoader.h"
 #include <freeglut.h>
-
-
 
 
 struct Particle
@@ -25,7 +23,6 @@ struct Particle
 	GLfloat scale;
 	bool active;
 	GLfloat color[4];
-
 };
 
 
@@ -35,7 +32,6 @@ ParticleManager::ParticleManager(void)
 {
 
 }
-
 
 ParticleManager::ParticleManager(int x , int y , int z)
 {
@@ -52,11 +48,9 @@ ParticleManager::ParticleManager(int x , int y , int z)
 	texName = TextureLoader::loadTexture("Textures\\smoke.bmp");
 }
 
-
 ParticleManager::~ParticleManager(void)
 {
 }
-
 
 
 void ParticleManager::createParticle(int i)
@@ -78,49 +72,31 @@ void ParticleManager::createParticle(int i)
 }
 
 
-
-
-
-
-
 void ParticleManager::display(void)
 {
-	
-
 	glEnable(GL_COLOR_BUFFER_BIT );
-glEnable(GL_BLEND);
-glBlendFunc(GL_ONE, GL_ONE);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_ONE, GL_ONE);
  
-glPushMatrix(); 
+	glPushMatrix(); 
 
 	glDisable(GL_DEPTH_TEST);
 	glEnable(GL_TEXTURE_2D); 
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE,  GL_MODULATE);
-
 	glBindTexture(GL_TEXTURE_2D, texName);
 
 	glTranslated(-15 ,0 ,-15);
-	//glRotatef(xAngle, 1.0, 0.0, 0.0);
-	//glRotatef(yAngle, 0.0, 1.0, 0.0);
-//	glRotatef(zAngle, 0.0, 0.0, 1.0);
 	glTranslated(0,0 ,0);
 	glScaled(0.5 ,0.5 ,0.5);
 
 	
 	for(int i = 0; i<1000 ;i++)
 	{
-			glPushMatrix(); 
-
-		glMatrixMode(GL_MODELVIEW);
-
+		glPushMatrix(); 
 
 		glTranslated(particles[i].x ,particles[i].y ,particles[i].z);
 		glTranslated(0,0 ,0);
 		glScaled(particles[i].scale ,particles[i].scale ,particles[i].scale);
-
-
-	
-
 
 		glBegin (GL_QUADS);
 		glColor4f( particles[i].color[0] ,particles[i].color[1], particles[i].color[2] , particles[i].color[3] );	
@@ -129,12 +105,6 @@ glPushMatrix();
 		glTexCoord2d (1, 1);  glVertex3f (1, 1, 0);
 		glTexCoord2d (0, 1);  glVertex3f (-1, 1, 0);
 		glEnd();
-
-
-
-
-
-
 
 		glPopMatrix();
 	}
@@ -164,12 +134,10 @@ void ParticleManager::reset(int x , int y , int z)
 		particles[i].z = emitterZ + (float)rand()/((float)RAND_MAX/2) - (float)rand()/((float)RAND_MAX/2) ;
 		particles[i].scale = 0.3;
 	}
-
 }
 
 void ParticleManager::update(void)
 {
-
 	for(int i = 0; i<1000 ;i++)
 	{
 		particles[i].timer++;
@@ -181,14 +149,14 @@ void ParticleManager::update(void)
 			if(particles[i].y < emitterY + 3)
 			{
 				particles[i].color[0] =  0.37f;
-				particles[i].color[1] = 0.21f; // (1-perc);
-				particles[i].color[2] = 0.1f; //(1-perc);
+				particles[i].color[1] = 0.21f; 
+				particles[i].color[2] = 0.1f; 
 			}
 			else if( (particles[i].y > 15) &&  (particles[i].y < 20))
 			{
 				float perc2 = particles[i].y /80.0f;
-				particles[i].x -=  perc2  * windX;
-				particles[i].z -=  perc2     * windZ;
+				particles[i].x -= perc2 * windX;
+				particles[i].z -= perc2 * windZ;
 			}
 
 			else 
@@ -198,16 +166,17 @@ void ParticleManager::update(void)
 				particles[i].z -=  perc2  * windZ;
 			}
 
-
 			particles[i].x += particles[i].direction[0];
 			particles[i].y += particles[i].direction[1];
 			particles[i].z += particles[i].direction[2];
-						if(particles[i].y > 10)
+			
+			if(particles[i].y > 10)
 			{
-			particles[i].color[0] = (1-perc);
-			particles[i].color[1] =  (1-perc);
-			particles[i].color[2] = (1-perc);
-						}
+				particles[i].color[0] = (1-perc);
+				particles[i].color[1] =  (1-perc);
+				particles[i].color[2] = (1-perc);
+			}
+			
 			particles[i].color[3] = (1-perc);
 			particles[i].scale += 0.0008f;
 		}
@@ -216,5 +185,4 @@ void ParticleManager::update(void)
 			createParticle(i);
 		}
 	}
-
 }
