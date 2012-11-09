@@ -3,28 +3,23 @@
 #pragma once
 class Ocean
 {
-
 public:
-	GLfloat xAngle;
-	GLfloat yAngle;
-	GLfloat zAngle;
 	Ocean(void);
 	Ocean(int sizeT);
 	~Ocean(void);
-	void drawVertex(int x , int y);
 	void display(void);
 	void genMap(int size);
-	void getColor(GLfloat color[4], int x , int y);
-	void smooth(int passes , float map[65][65]);
 	void update();
-	GLfloat timer;
-	int limit;
+private:
+	void calculateNormals(int size);
+	void drawVertex(int x , int y);
+	void getColor(GLfloat color[4], int x , int y);
+	void calculateColors(int size);
+	double distanceT(double dX0, double dY0, double dX1, double dY1);
 	GLfloat xPosition;
 	GLfloat yPosition;
 	GLfloat zPosition;
-	GLfloat scale;
-private:
-	void calculateColors(int size);
 	GLuint texName;
-	double distanceT(double dX0, double dY0, double dX1, double dY1);
+	GLfloat scale;
+	GLfloat timer;
 };

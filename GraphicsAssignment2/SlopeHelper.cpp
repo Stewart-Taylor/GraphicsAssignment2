@@ -22,8 +22,6 @@ SlopeHelper::~SlopeHelper(void)
 
 float SlopeHelper::getSlopeValue(int x , int y , GLfloat landsc[65][65])
 {
-	
-
 	float topLeft = getTopLeftSlope(x, y ,  landsc);
 	float topMid = getTopMiddleSlope(x, y, landsc);
 	float topRight = getTopRightSlope(x, y,  landsc);
@@ -34,7 +32,6 @@ float SlopeHelper::getSlopeValue(int x , int y , GLfloat landsc[65][65])
 	float botLeft = getBottomLeftSlope(x, y,  landsc);
 	float botMid = getBottomMiddleSlope(x, y,  landsc);
 	float botRight = getBottomRightSlope(x, y,  landsc);
-
 
 	float high = 0;
 
