@@ -17,7 +17,7 @@ Plane::Plane(void)
 	xPosition = 0;
 	yPosition = -1.2;
 	zPosition = 0;
-	xAngle = -90;
+	xAngle = 90;
 	yAngle = 0;
 	zAngle = 0;
 	scale = 800;

@@ -41,7 +41,7 @@ LTree tree;
 Terrain terrain ;
 ParticleManager particleManager;
 LTree trees[800];
-Shrub shrubs[1200];
+Shrub shrubs[800];
 
 
 GLfloat specular = 1.0;
@@ -105,9 +105,9 @@ void generateForest()
 		{
 			if( isPeak(x,y) == false)
 			{
-			if(( terrain.landsc[x][y] < 2.0f) && ( terrain.landsc[x][y] > 0.7f) )
+			if(( terrain.heightPoints[x][y] < 2.0f) && ( terrain.heightPoints[x][y] > 0.7f) )
 			{
-				if( (terrain.textures[x][y] == terrain.grassTex) || ( terrain.landsc[x][y] < 4.0f) )
+				if( (terrain.textures[x][y] == terrain.grassTex) || ( terrain.heightPoints[x][y] < 4.0f) )
 				{
 					if(treeCounter < 800)
 					{
@@ -116,7 +116,7 @@ void generateForest()
 
 							float xPos = x + (float)rand()/((float)RAND_MAX/0.5f) - (float)rand()/((float)RAND_MAX/0.5f) ;
 							float zPos = y + (float)rand()/((float)RAND_MAX/0.5f) - (float)rand()/((float)RAND_MAX/0.5f) ;
-							float yPos = terrain.landsc[x][y];
+							float yPos = terrain.heightPoints[x][y];
 
 							trees[treeCounter] = LTree(xPos,yPos,zPos ,treeTexID);
 							treeCounter++;
@@ -136,7 +136,7 @@ void generateShrubs()
 {
 	GLuint treeTexID = TextureLoader::loadTexture("Textures\\shrub.bmp");
 
-	for(int i = 0 ; i < 1200 ; i++)
+	for(int i = 0 ; i < 800 ; i++)
 	{
 		int x = ((rand()%20) - (rand()%20));
 		int y = -4;
@@ -153,16 +153,16 @@ void generateShrubs()
 		{
 			if( isPeak(x,y) == false)
 			{
-			if(( terrain.landsc[x][y] < 2.0f) && ( terrain.landsc[x][y] > 0.4f) )
+			if(( terrain.heightPoints[x][y] < 2.0f) && ( terrain.heightPoints[x][y] > 0.4f) )
 			{
-					if(treeCounter < 1200)
+					if(treeCounter < 800)
 					{
 						for(int i = 0 ; i < 5 ; i++)
 						{
 
 							float xPos = x + (float)rand()/((float)RAND_MAX/0.5f) - (float)rand()/((float)RAND_MAX/0.5f) ;
 							float zPos = y + (float)rand()/((float)RAND_MAX/0.5f) - (float)rand()/((float)RAND_MAX/0.5f) ;
-							float yPos = terrain.landsc[x][y];
+							float yPos = terrain.heightPoints[x][y];
 
 							shrubs[treeCounter] = Shrub(xPos,yPos,zPos ,treeTexID);
 							treeCounter++;
@@ -204,7 +204,7 @@ void init (void)
 	glEnable(GL_LIGHT0);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_NORMALIZE);
-	glCullFace(GL_BACK);
+	glCullFace(GL_FRONT);
 	glEnable(GL_COLOR_MATERIAL);
 	glEnable(GL_TEXTURE_2D);
 
@@ -246,10 +246,13 @@ void display (void)
 
 	glDisable(GL_CULL_FACE);
 	skybox.display();
+	glEnable(GL_CULL_FACE);
 	
 	plane.display();
 	terrain.display();
 	ocean.display();
+	
+	glDisable(GL_CULL_FACE);
 	particleManager.display();
 
 	for(int i = 0 ; i < 800 ; i++)
@@ -257,16 +260,11 @@ void display (void)
 		if(trees[i].yPosition != -4) // only draws assigned trees - 4 is default not assigned 
 		{
 			trees[i].display();
-		}
-	}
-
-	for(int i = 0 ; i < 1200 ; i++)
-	{
-		if(shrubs[i].yPosition != -4) // only draws assigned shrubs - 4 is default not assigned 
-		{
 			shrubs[i].display();
 		}
 	}
+
+
 	
 	glutSwapBuffers();
 }
