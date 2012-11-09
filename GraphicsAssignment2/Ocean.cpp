@@ -9,7 +9,6 @@
 #include "Ocean.h"
 #include "TextureLoader.h"
 
-
 #include <windows.h>	
 #include <stdio.h>	
 #include <freeglut.h>
@@ -17,7 +16,6 @@
 #include "NormalHelper.h"
 #include <time.h>
   
-
 GLfloat seasc[64+1][64+1];
 GLfloat seascO[64+1][64+1];
 GLfloat cdss[64+1];
@@ -78,41 +76,8 @@ void Ocean::genMap(int mapSize)
 		}
 	}
 
-	smooth(1 , seasc);
+	update();
 }
-
-
-
-void Ocean::smooth(int passes , float map[65][65])
-{
-	int size = 64;
-
-	for(int i =0 ; i < passes ; i++)
-	{
-
-		for(int x = 2; x < size -2; x++)
-		{
-			for(int y = 2; y < size -2; y++)
-			{
-				float total = 0;
-				total += map[x][y] ;
-				total += map[x-1][y-1] ;
-				total += map[x][y-1] ;
-				total += map[x+1][y] ;
-				total += map[x-1][y] ;
-				total += map[x+1][y] ;
-				total += map[x-1][y+1] ;
-				total += map[x][y+1] ;
-				total += map[x+1][y+1] ;
-
-				float avg = total / 9;
-				map[x][y] = avg; 
-			}
-		}
-
-	}
-
- }
 
 
 
@@ -135,7 +100,7 @@ void Ocean::getColor(GLfloat color[4], int x , int y)
 }
 
 
-double Ocean::distanceT(double dX0, double dY0, double dX1, double dY1) // REMOVE
+double Ocean::distanceT(double dX0, double dY0, double dX1, double dY1)
 {
     return sqrt((dX1 - dX0)*(dX1 - dX0) + (dY1 - dY0)*(dY1 - dY0));
 }
@@ -158,13 +123,11 @@ void Ocean::display(void)
 
 	glTranslated(xPosition ,yPosition ,zPosition);
 	glRotatef(xAngle, 1.0, 0.0, 0.0);
-	glRotatef(yAngle, 0.0, 1.0, 0.0);
-	glRotatef(zAngle, 0.0, 0.0, 1.0);
 	glTranslated(0,0 ,0);
-	glScaled(scale ,scale ,scale);
+	glScaled(scale ,scale ,1);
 
-	
-	
+
+
 	int i, j;
 	float v1[3],v2[3],out[3];
 	glColor3f(1.0, 1.0, 1.0);
@@ -217,21 +180,19 @@ void Ocean::display(void)
 
 
 
-
-
 void Ocean::drawVertex(int i , int j)
 {
 	GLfloat color[4] = {0,0,0 , 0};
-	
+
 	getColor(color , i,j);
 	glColor4f(color[0], color[1], color[2] , color[3]);	  glNormal3fv(&normalst[i][j][0]);   glTexCoord2f(0,0);glVertex3f(cdss[i],cdss[j],-seasc[i][j]);
-		  
+
 	getColor(color , i+1,j);
 	glColor4f(color[0], color[1], color[2], color[3]);	  glNormal3fv(&normalst[i+1][j][0]);  glTexCoord2f(1,0); glVertex3f(cdss[i+1],cdss[j],-seasc[i+1][j]);
-		  
+
 	getColor(color , i+1,j+1);
 	glColor4f(color[0], color[1], color[2], color[3]);	  glNormal3fv(&normalst[i+1][j+1][0]); glTexCoord2f(1,1); glVertex3f(cdss[i+1],cdss[j+1],-seasc[i+1][j+1]);
-		  
+
 	getColor(color , i, j+1);
 	glColor4f(color[0], color[1], color[2], color[3]);  glNormal3fv(&normalst[i][j+1][0]); glTexCoord2f(0,1); glVertex3f(cdss[i],cdss[j+1],-seasc[i][j+1]);
 
@@ -247,11 +208,11 @@ void Ocean::update()
 	{
 		for (int j = 0; j <= 64; j++)
 		{
-		
+
 			GLfloat val1 = 0.1f *sin((float)(i+ timer))  ;
 			GLfloat val2 = 0.3f *sin((float)(j+ (timer*2)))  ;
 			GLfloat val3 = 0.3f *sin((float)(seascO[i][j] + timer) ) ;
-		
+
 			GLfloat valF = val1 + val2 + val3;
 			seasc[i][j]  =valF - 0.4f ;
 		}

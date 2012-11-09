@@ -19,11 +19,12 @@ public:
 	void update();
 	GLfloat timer;
 	int limit;
-private:
-	GLuint texName;
 	GLfloat xPosition;
 	GLfloat yPosition;
 	GLfloat zPosition;
 	GLfloat scale;
+private:
+	void calculateColors(int size);
+	GLuint texName;
 	double distanceT(double dX0, double dY0, double dX1, double dY1);
 };

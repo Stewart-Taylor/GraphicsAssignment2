@@ -227,7 +227,6 @@ void Terrain::getColor(GLfloat color[3], float value)
 	{
 		color[0] = 0.4; color[1] = 0.4; color[2] = 0.4; 
 	}
-
 }
 
 
@@ -250,20 +249,12 @@ void Terrain::display(void)
 	glScaled(scale ,scale ,scale);
 
 
-
-
    for (int j = 0; j < size; j++)
       for (int i = 0; i < size; i++) {
-		
-		  GLfloat color[3] = {0,0,0};
 		  getTexture( i,j);
-		  
 		  glBegin(GL_POLYGON);
-
 		  drawVertex(i,j);
-
 		  glEnd();
-
 	  }
       glEnd();  
 
