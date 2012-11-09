@@ -5,7 +5,7 @@
  * Uses a customer designed algorithm to generate the island
  *
  *
- * Last Updated: 07/11/2012
+ * Last Updated: 09/11/2012
 */
 
 #include "TerrainGenerator.h"
@@ -35,7 +35,6 @@ void TerrainGenerator::generateTerrain(float mapGrid[65][65])
 	int random_seed = rand();
 	srand(random_seed);
 
-
 	for (int i = 0; i <= mapSize; i++)
 	{
 		for (int j = 0; j <= mapSize; j++)
@@ -60,10 +59,6 @@ void TerrainGenerator::generateTerrain(float mapGrid[65][65])
 
 	vPointX += (rand()%10) - (rand()%10) ;
 	vPointY += (rand()%10) - (rand()%10) ;
-
-
-
-	
 
 	int craterSize = (rand()%3 + 3);
 	int poolSize = craterSize - 2;

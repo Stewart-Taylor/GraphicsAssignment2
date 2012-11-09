@@ -3,13 +3,11 @@
  *------------------------------------
  * This class is used to provide functions that will determine the slope of a surface
  *
- *
  * Last Updated: 05/11/2012
 */
 
 #include "SlopeHelper.h"
 #include <math.h>
-
 
 int size = 65;
 
@@ -49,12 +47,7 @@ float SlopeHelper::getSlopeValue(int x , int y , GLfloat landsc[65][65])
 	if (botMid >= high) { high = botMid; }
 	if (botRight >= high) { high = botRight; }
 
-	float total = topLeft + topRight + topMid + midLeft + midRight + botLeft + botMid + botRight;
-
-    // float value = total / 8;
-	float value = high;
-
-	return value;
+	return high;
 }
 
 

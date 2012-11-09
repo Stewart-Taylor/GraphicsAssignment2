@@ -7,7 +7,7 @@
  * 
  * The main class is used as a controller and is also used to set the program up.
  *
- * Last Updated: 08/11/2012
+ * Last Updated: 10/11/2012
 */
 
 #define _USE_MATH_DEFINES
@@ -40,6 +40,9 @@ Ocean ocean;
 LTree tree;
 Terrain terrain ;
 ParticleManager particleManager;
+LTree trees[800];
+Shrub shrubs[1200];
+
 
 GLfloat specular = 1.0;
 GLfloat diffuse = 0.5;
@@ -49,11 +52,6 @@ GLfloat light_position[] = { 56.0 , 20.0 ,9.0 , 1.0};
 GLfloat mat_specular[] = { specular, specular, specular, 1.0 };
 GLfloat mat_diffuse[] = { diffuse, diffuse, 0.5, 1.0 };
 GLfloat mat_shininess[] = { shiny };
-
-
-
-LTree trees[800];
-Shrub shrubs[1200];
 
 
 bool isPeak(int x , int y)
@@ -82,10 +80,8 @@ bool isPeak(int x , int y)
 		}
 	}
 	
-
 	return false;
 }
-
 
 
 void generateForest()
@@ -251,7 +247,6 @@ void display (void)
 	glDisable(GL_CULL_FACE);
 	skybox.display();
 	
-
 	plane.display();
 	terrain.display();
 	ocean.display();
@@ -265,10 +260,9 @@ void display (void)
 		}
 	}
 
-
 	for(int i = 0 ; i < 1200 ; i++)
 	{
-		if(shrubs[i].yPosition != -4) // only draws assigned trees - 4 is default not assigned 
+		if(shrubs[i].yPosition != -4) // only draws assigned shrubs - 4 is default not assigned 
 		{
 			shrubs[i].display();
 		}
@@ -281,11 +275,9 @@ void reshape (int w, int h)
 {
     glViewport (0, 0, (GLsizei)w, (GLsizei)h); //set the viewport to the current window specifications
     glMatrixMode (GL_PROJECTION); //set the matrix to projection
-
     glLoadIdentity ();
     gluPerspective (60, (GLfloat)w / (GLfloat)h, 0.1, 1600.0); //set the perspective (angle of sight, width, height, , depth)
     glMatrixMode (GL_MODELVIEW); //set the matrix back to model
-
 }
 
 void keyboard (unsigned char key, int x, int y)
@@ -301,21 +293,7 @@ void keyboard (unsigned char key, int x, int y)
 	if (key=='u'){light_position[2] += 1;}
 	if (key=='o'){light_position[2] -= 1;}
 
-
-
-	//if (key=='p'){particleManager.reset(0,0,0);}
-
-	//if (key=='c'){ocean.yPosition += 0.01f;}
-	//if (key=='v'){ocean.yPosition -= 0.01f;}
-	
-
-//	if (key=='b'){ocean.genMap(64);}
-
 	if (key=='g'){generateMap();}
-	//if (key=='h'){terrain.smoothTerrain(1); terrain.calcSLopes(64);}
-//	if (key=='y'){terrain.errodeCoast(); terrain.calcSLopes(64);}
-	//if (key=='l'){tree.level += 1;}
-	//if (key=='k'){tree.level -= 1;}
 }
 
 void mouseUpdate(int x , int y)
@@ -323,13 +301,10 @@ void mouseUpdate(int x , int y)
 	//camera.mouseControl(x,y);
 }
 
-
-
 void idle(void)
 {
 	ocean.update();
 	particleManager.update();
-
 	glutPostRedisplay();
 }
 
@@ -345,6 +320,9 @@ void printInfo()
 	std::cout << " Q,E - Look Left/Right" << std::endl;
 	std::cout << " R,F - Move Camera Up/Down " << std::endl;
 	std::cout << " Z,X - Tilt Camera Up/Down" << std::endl;
+	std::cout << std::endl;
+	std::cout << "Main " << std::endl;
+	std::cout << " G - Generate Island" << std::endl;
 	std::cout << std::endl;
 	std::cout << "LIGHT " << std::endl;
 	std::cout << " U,I,K,L,J - Move Light Source" << std::endl;
