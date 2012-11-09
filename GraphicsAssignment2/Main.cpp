@@ -24,6 +24,7 @@
 #include "Shrub.h"
 #include "ParticleManager.h"
 #include "TextureLoader.h"
+#include "FoilageGenerator.h"
 
 #include <math.h>
 #include <stdlib.h>
@@ -42,7 +43,7 @@ Terrain terrain ;
 ParticleManager particleManager;
 LTree trees[800];
 Shrub shrubs[800];
-
+FoilageGenerator foilageGenerator;
 
 GLfloat specular = 1.0;
 GLfloat diffuse = 0.5;
@@ -54,137 +55,14 @@ GLfloat mat_diffuse[] = { diffuse, diffuse, 0.5, 1.0 };
 GLfloat mat_shininess[] = { shiny };
 
 
-bool isPeak(int x , int y)
-{
-	if ( (x  < 10) || ( x > 50))
-	{
-		return false;
-	}
-
-	if ( (y  < 10) || ( y > 50))
-	{
-		return false;
-	}
-
-	int xT = x;
-	int yT = y;
-
-	for(int iX = -4; iX < 4 ; iX++)
-	{
-		for(int iY = -4; iY < 4 ; iY++)
-		{
-			if( (xT +iX == terrain.peakX) && (yT + iY == terrain.peakZ))
-			{
-				return true;
-			}
-		}
-	}
-	
-	return false;
-}
-
-
-void generateForest()
-{
-	GLuint treeTexID = TextureLoader::loadTexture("Textures\\palm.bmp");
-
-	for(int i = 0 ; i < 800 ; i++)
-	{
-		int x = ((rand()%20) - (rand()%20));
-		int y = -4;
-		int z = ((rand()%20) - (rand()%20));
-		trees[i] = LTree(x,y,z ,treeTexID);
-
-	}
-
-	int treeCounter = 0;
-
-	for(int x = 10 ; x < 50 ; x++)
-	{
-		for(int y =10; y< 50 ; y++)
-		{
-			if( isPeak(x,y) == false)
-			{
-			if(( terrain.heightPoints[x][y] < 2.0f) && ( terrain.heightPoints[x][y] > 0.7f) )
-			{
-				if( (terrain.textures[x][y] == terrain.grassTex) || ( terrain.heightPoints[x][y] < 4.0f) )
-				{
-					if(treeCounter < 800)
-					{
-						for(int i = 0 ; i < 2 ; i++)
-						{
-
-							float xPos = x + (float)rand()/((float)RAND_MAX/0.5f) - (float)rand()/((float)RAND_MAX/0.5f) ;
-							float zPos = y + (float)rand()/((float)RAND_MAX/0.5f) - (float)rand()/((float)RAND_MAX/0.5f) ;
-							float yPos = terrain.heightPoints[x][y];
-
-							trees[treeCounter] = LTree(xPos,yPos,zPos ,treeTexID);
-							treeCounter++;
-						}
-					}
-				}
-			}
-			}
-		}
-	}
-
-}
-
-
-
-void generateShrubs()
-{
-	GLuint treeTexID = TextureLoader::loadTexture("Textures\\shrub.bmp");
-
-	for(int i = 0 ; i < 800 ; i++)
-	{
-		int x = ((rand()%20) - (rand()%20));
-		int y = -4;
-		int z = ((rand()%20) - (rand()%20));
-		shrubs[i] = Shrub(x,y,z ,treeTexID);
-
-	}
-
-	int treeCounter = 0;
-
-	for(int x = 10 ; x < 50 ; x++)
-	{
-		for(int y =10; y< 50 ; y++)
-		{
-			if( isPeak(x,y) == false)
-			{
-			if(( terrain.heightPoints[x][y] < 2.0f) && ( terrain.heightPoints[x][y] > 0.4f) )
-			{
-					if(treeCounter < 800)
-					{
-						for(int i = 0 ; i < 5 ; i++)
-						{
-
-							float xPos = x + (float)rand()/((float)RAND_MAX/0.5f) - (float)rand()/((float)RAND_MAX/0.5f) ;
-							float zPos = y + (float)rand()/((float)RAND_MAX/0.5f) - (float)rand()/((float)RAND_MAX/0.5f) ;
-							float yPos = terrain.heightPoints[x][y];
-
-							shrubs[treeCounter] = Shrub(xPos,yPos,zPos ,treeTexID);
-							treeCounter++;
-						}
-					}
-				
-			}
-			}
-		}
-	}
-
-}
-
 void generateMap()
 {
 	terrain.generateMap(64);
 	ocean.genMap(64);
 	particleManager.reset(terrain.peakX,terrain.peakY,terrain.peakZ);
-	generateForest();
-	generateShrubs();
+	foilageGenerator.generateForest(trees ,terrain);
+	foilageGenerator.generateShrubs(shrubs , terrain);
 }
-
 
 void setObjects(void)
 {

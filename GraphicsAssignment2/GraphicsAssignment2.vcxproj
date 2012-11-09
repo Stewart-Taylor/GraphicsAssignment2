@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="FoilageGenerator.h" />
     <ClInclude Include="LTree.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="NormalHelper.h" />
@@ -28,6 +29,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="FoilageGenerator.cpp" />
     <ClCompile Include="LTree.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="NormalHelper.cpp" />
