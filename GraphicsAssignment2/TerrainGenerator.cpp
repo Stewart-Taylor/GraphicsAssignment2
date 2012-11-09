@@ -28,7 +28,7 @@ TerrainGenerator::~TerrainGenerator(void)
 
 void TerrainGenerator::generateTerrain(float mapGrid[65][65])
 {
-	float tempLand[64 + 1][64 + 1];
+	GLfloat tempLand[64 + 1][64 + 1];
 	int mapSize = 64;
 
 	srand(time(0));
@@ -52,7 +52,7 @@ void TerrainGenerator::generateTerrain(float mapGrid[65][65])
 		}
 	}
 		
-	smoothTerrain(1 , tempLand );
+	smoothTerrain(1 , tempLand);
 
 	int vPointX = mapSize /2;
 	int vPointY = mapSize /2;
@@ -79,13 +79,11 @@ void TerrainGenerator::generateTerrain(float mapGrid[65][65])
 
 	int jitter = ( (rand()%4) + 1);
 
-
 	for(int x = -outerSize; x < outerSize; x++)
 	{
 		for(int y = -outerSize; y < outerSize; y++)
 		{
 			float distance = sqrt( pow( (float)((vPointX+x) - vPointX),2)+ (pow( (float)((vPointY+y) - vPointY),2)));
-
 
 			float val = (distance /(outerSize+craterSize + 3));
 			val = (1- val);
@@ -102,7 +100,6 @@ void TerrainGenerator::generateTerrain(float mapGrid[65][65])
 		}
 	}
 		
-
 	for(int x = -poolSize; x < poolSize; x++)
 	{
 		for(int y = -poolSize; y < poolSize; y++)
@@ -113,7 +110,6 @@ void TerrainGenerator::generateTerrain(float mapGrid[65][65])
 		
 	smoothTerrain(1 , tempLand);
 
-
 	for (int i = 0; i <= mapSize; i++)
 	{
 		for (int j = 0; j <= mapSize; j++)
@@ -122,7 +118,6 @@ void TerrainGenerator::generateTerrain(float mapGrid[65][65])
 
 			if(  (i < rSize) || (j < rSize) || (i > mapSize-rSize - 1) || ( j > mapSize-rSize))
 			{
-				//	tempLand[i][j] = -2 -rSize ;
 					tempLand[i][j] = -8;
 			}
 		}
@@ -190,7 +185,7 @@ void TerrainGenerator::errodeCoast(float map[65][65])
 				total += map[x+1][y+1] ;
 
 				float avg = total / 9;
-				map[x][y] = avg; 
+				map[x][y] = avg;
 			}
 		}
 	}

@@ -52,7 +52,6 @@ ParticleManager::~ParticleManager(void)
 {
 }
 
-
 void ParticleManager::createParticle(int i)
 {
 	 particles[i].x = emitterX + (float)rand()/((float)RAND_MAX/2) - (float)rand()/((float)RAND_MAX/2) ;
@@ -65,9 +64,9 @@ void ParticleManager::createParticle(int i)
 	 particles[i].direction[2] = (float)rand()/((float)RAND_MAX/0.003f) - (float)rand()/((float)RAND_MAX/0.003f) ;
 	 particles[i].scale = (float)rand()/((float)RAND_MAX/0.9f) ;
 	 particles[i].active = true;
-	 particles[i].color[0] = 0 ;(float)rand()/((float)RAND_MAX/0.4f);
-	 particles[i].color[1] = 0 ;(float)rand()/((float)RAND_MAX/0.4f);
-	 particles[i].color[2] = 0 ;(float)rand()/((float)RAND_MAX/0.4f);
+	 particles[i].color[0] = 0;
+	 particles[i].color[1] = 0;
+	 particles[i].color[2] = 0;
 	 particles[i].color[3] = 1;
 }
 
@@ -95,7 +94,6 @@ void ParticleManager::display(void)
 		glPushMatrix(); 
 
 		glTranslated(particles[i].x ,particles[i].y ,particles[i].z);
-		glTranslated(0,0 ,0);
 		glScaled(particles[i].scale ,particles[i].scale ,particles[i].scale);
 
 		glBegin (GL_QUADS);
@@ -117,7 +115,6 @@ void ParticleManager::display(void)
 }
 
 
-
 void ParticleManager::reset(int x , int y , int z)
 {
 	emitterX = x;
@@ -135,6 +132,7 @@ void ParticleManager::reset(int x , int y , int z)
 		particles[i].scale = 0.3;
 	}
 }
+
 
 void ParticleManager::update(void)
 {
@@ -158,7 +156,6 @@ void ParticleManager::update(void)
 				particles[i].x -= perc2 * windX;
 				particles[i].z -= perc2 * windZ;
 			}
-
 			else 
 			{
 				float perc2 = particles[i].y /60.0f;

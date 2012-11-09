@@ -42,7 +42,7 @@ void FoilageGenerator::generateForest(LTree trees[800], Terrain terrain)
 	{
 		for(int y =10; y< 50 ; y++)
 		{
-			if( (isPeak(x,y,terrain) == false) || ( treeCounter < 800))
+			if( (isPeak(x,y,terrain) == false) && ( treeCounter < 800))
 			{
 				if(( terrain.heightPoints[x][y] < 2.0f) && ( terrain.heightPoints[x][y] > 0.7f) )
 				{
@@ -66,14 +66,14 @@ void FoilageGenerator::generateForest(LTree trees[800], Terrain terrain)
 
 void FoilageGenerator::generateShrubs(Shrub shrubs[800] , Terrain terrain)
 {
-	GLuint treeTexID = TextureLoader::loadTexture("Textures\\shrub.bmp");
+	GLuint shrubTexID = TextureLoader::loadTexture("Textures\\shrub.bmp");
 
 	for(int i = 0 ; i < 800 ; i++)
 	{
 		int x = 0;
 		int y = -4;
 		int z = 0;
-		shrubs[i] = Shrub(x,y,z ,treeTexID);
+		shrubs[i] = Shrub(x,y,z ,shrubTexID);
 	}
 
 	int shrubCounter = 0;
@@ -82,7 +82,7 @@ void FoilageGenerator::generateShrubs(Shrub shrubs[800] , Terrain terrain)
 	{
 		for(int y =10; y< 50 ; y++)
 		{
-			if( (isPeak(x,y,terrain) == false) || ( shrubCounter < 800))
+			if( (isPeak(x,y,terrain) == false) && ( shrubCounter < 800))
 			{
 				if(( terrain.heightPoints[x][y] < 2.0f) && ( terrain.heightPoints[x][y] > 0.4f) )
 				{
@@ -92,7 +92,7 @@ void FoilageGenerator::generateShrubs(Shrub shrubs[800] , Terrain terrain)
 						float zPos = y + (float)rand()/((float)RAND_MAX/0.5f) - (float)rand()/((float)RAND_MAX/0.5f) ;
 						float yPos = terrain.heightPoints[x][y];
 
-						shrubs[shrubCounter] = Shrub(xPos,yPos,zPos ,treeTexID);
+						shrubs[shrubCounter] = Shrub(xPos,yPos,zPos ,shrubTexID);
 						shrubCounter++;
 					}
 				}
