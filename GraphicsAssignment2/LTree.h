@@ -3,6 +3,7 @@
 class LTree
 {
 public:
+	bool active;
 	int level;
 	GLfloat xPosition;
 	GLfloat yPosition;

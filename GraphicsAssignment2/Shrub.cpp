@@ -27,20 +27,8 @@ Shrub::Shrub(GLfloat x , GLfloat y , GLfloat z , GLuint texID)
 	xPosition = x;
 	yPosition = y;
 	zPosition = z;
-	xAngle = 0; 
-	yAngle = 0;
-	zAngle = 0;
 	scale = 0.3f;
-	level = 1;
-	
 	texName = texID;
-
-	xAngle = (rand()% 30) - (rand()% 30);
-	zAngle = (rand()% 360);
-	zAngle = (rand()% 30) - (rand()% 30);
-	height = (rand()% 5) + 3;
-
-	leaves = (rand()% 4) +1;
 }
 
 
@@ -66,25 +54,19 @@ void Shrub::display(void)
 	glMatrixMode(GL_MODELVIEW);
 
 	glTranslated(xPosition ,yPosition ,zPosition);
-	glRotatef(xAngle, 1.0, 0.0, 0.0);
-	glRotatef(yAngle, 0.0, 1.0, 0.0);
-	glRotatef(zAngle, 0.0, 0.0, 1.0);
-	glTranslated(0,0 ,0);
 	glScaled(scale ,scale ,scale);
 
-	tree();
+	drawShrub();
 
 	glPopMatrix();
 	glPopMatrix();
 
-	
 	glDisable(GL_TEXTURE_2D);
 }
 
 
-void Shrub::tree()
+void Shrub::drawShrub()
 {
-	//Palms
 	glColor3f(1, 1, 1);
 
 	glBegin(GL_TRIANGLES);	
@@ -94,42 +76,25 @@ void Shrub::tree()
 	glTexCoord2f(0.0, 1.0);	 glVertex3f( 1.0f, 0.14 , 0.0f);		
 	glEnd();	
 
-
+	glBegin(GL_TRIANGLES);		
+	glNormal3f(0.0f, 1.0f, 1.0f);
+	glTexCoord2f(0.0, 0.0); glVertex3f( 0.0f, 0.4 , -0.6f);		
+	glTexCoord2f(1.0, 0.0);	 glVertex3f(-1.0f, 0.3 , 0.0f);		
+	glTexCoord2f(0.0, 1.0);	 glVertex3f( 1.0f, 0.12 , 0.0f);		
+	glEnd();
 	
-		glBegin(GL_TRIANGLES);		
-		glNormal3f(0.0f, 1.0f, 1.0f);
-		glTexCoord2f(0.0, 0.0); glVertex3f( 0.0f, 0.4 , -0.6f);		
-		glTexCoord2f(1.0, 0.0);	 glVertex3f(-1.0f, 0.3 , 0.0f);		
-		glTexCoord2f(0.0, 1.0);	 glVertex3f( 1.0f, 0.12 , 0.0f);		
-		glEnd();
+	glBegin(GL_TRIANGLES);
+	glNormal3f(1.0f, 1.0f, 0.0f);
+	glTexCoord2f(0.0, 0.0);	 glVertex3f( -0.6f, 0.9 , -0.0f);	
+	glTexCoord2f(1.0, 0.0);	 glVertex3f(0.0f, 0.14 , -1.0f);		
+	glTexCoord2f(0.0, 1.0);	 glVertex3f( 0.0f, 0.11 , 1.0f);		
+	glEnd();
 	
-		glBegin(GL_TRIANGLES);
-		glNormal3f(1.0f, 1.0f, 0.0f);
-		glTexCoord2f(0.0, 0.0);	 glVertex3f( -0.6f, 0.9 , -0.0f);	
-		glTexCoord2f(1.0, 0.0);	 glVertex3f(0.0f, 0.14 , -1.0f);		
-		glTexCoord2f(0.0, 1.0);	 glVertex3f( 0.0f, 0.11 , 1.0f);		
-		glEnd();
-	
-		glBegin(GL_TRIANGLES);	
-		glNormal3f(1.0f, 1.0f, 0.0f);
-		glTexCoord2f(0.0, 0.0);	 glVertex3f( 0.6f, 0.6 , -0.0f);	
-		glTexCoord2f(1.0, 0.0);	 glVertex3f(0.0f, 0.14 , 1.0f);		
-		glTexCoord2f(0.0, 1.0);	 glVertex3f( 0.0f, 0.12 , -1.0f);		
-		glEnd();
-}
-
-
-void Shrub::setAngle(GLfloat xAngleT , GLfloat yAngleT , GLfloat zAngleT)
-{
-	xAngle = xAngleT;
-	yAngle = yAngleT;
-	zAngle = zAngleT;
-}
-
-void Shrub::setPosition(GLfloat xPositionT , GLfloat yPositionT , GLfloat zPositionT)
-{
-	xPosition = xPositionT;
-	yPosition = yPositionT;
-	zPosition = zPositionT;
+	glBegin(GL_TRIANGLES);	
+	glNormal3f(1.0f, 1.0f, 0.0f);
+	glTexCoord2f(0.0, 0.0);	 glVertex3f( 0.6f, 0.6 , -0.0f);	
+	glTexCoord2f(1.0, 0.0);	 glVertex3f(0.0f, 0.14 , 1.0f);		
+	glTexCoord2f(0.0, 1.0);	 glVertex3f( 0.0f, 0.12 , -1.0f);		
+	glEnd();
 }
 

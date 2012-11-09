@@ -129,12 +129,12 @@ void display (void)
 
 	for(int i = 0 ; i < 800 ; i++)
 	{
-		if(trees[i].yPosition != -4) // only draws assigned trees - 4 is default not assigned 
+		if(trees[i].active == true) // only draws assigned trees
 		{
 			trees[i].display();
 		}
 
-		if(shrubs[i].yPosition != -4) // only draws assigned trees - 4 is default not assigned 
+		if(shrubs[i].active == true) 
 		{
 			shrubs[i].display();
 		}

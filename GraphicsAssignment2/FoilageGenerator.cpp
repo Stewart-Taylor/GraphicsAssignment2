@@ -30,10 +30,8 @@ void FoilageGenerator::generateForest(LTree trees[800], Terrain terrain)
 
 	for(int i = 0 ; i < 800 ; i++)// reset trees
 	{
-		int x = 0;
-		int y = -4;
-		int z = 0;
-		trees[i] = LTree(x,y,z ,treeTexID);
+		trees[i] = LTree(0,0,0 ,treeTexID);
+		trees[i].active = false;
 	}
 
 	int treeCounter = 0;
@@ -54,6 +52,7 @@ void FoilageGenerator::generateForest(LTree trees[800], Terrain terrain)
 							GLfloat zPos = y + (float)rand()/((float)RAND_MAX/0.5f) - (float)rand()/((float)RAND_MAX/0.5f) ;
 							GLfloat yPos = terrain.heightPoints[x][y];
 							trees[treeCounter] = LTree(xPos,yPos,zPos ,treeTexID);
+							trees[treeCounter].active = true;
 							treeCounter++;
 						}
 					}
@@ -70,10 +69,8 @@ void FoilageGenerator::generateShrubs(Shrub shrubs[800] , Terrain terrain)
 
 	for(int i = 0 ; i < 800 ; i++)
 	{
-		int x = 0;
-		int y = -4;
-		int z = 0;
-		shrubs[i] = Shrub(x,y,z ,shrubTexID);
+		shrubs[i] = Shrub(0,0,0 ,shrubTexID);
+		shrubs[i].active = false;
 	}
 
 	int shrubCounter = 0;
@@ -93,6 +90,7 @@ void FoilageGenerator::generateShrubs(Shrub shrubs[800] , Terrain terrain)
 						float yPos = terrain.heightPoints[x][y];
 
 						shrubs[shrubCounter] = Shrub(xPos,yPos,zPos ,shrubTexID);
+						shrubs[shrubCounter].active = true;
 						shrubCounter++;
 					}
 				}

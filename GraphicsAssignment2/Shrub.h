@@ -5,24 +5,16 @@
 class Shrub
 {
 public:
-	int level;
-	GLfloat xPosition;
-	GLfloat yPosition;
-	GLfloat zPosition;
 	Shrub();
 	Shrub(GLfloat x , GLfloat y , GLfloat z , GLuint texID);
 	~Shrub(void);
 	void display(void);
-	void tree();
-	void setAngle(GLfloat xAngleT , GLfloat yAngleT , GLfloat zAngleT);
-	void setPosition(GLfloat xPositionT , GLfloat yPositionT , GLfloat zPositionT);
-	void spin(GLfloat speed);
+	bool active;
 private:
-	GLuint leaves;
+	void drawShrub(void);
+	GLfloat xPosition;
+	GLfloat yPosition;
+	GLfloat zPosition;
 	GLfloat scale;
 	GLuint texName;
-	GLfloat xAngle;
-	GLfloat yAngle;
-	GLfloat zAngle;
-	GLfloat height;
 };
