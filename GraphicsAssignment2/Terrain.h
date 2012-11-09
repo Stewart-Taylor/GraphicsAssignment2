@@ -20,11 +20,11 @@ public:
 	GLuint peakY;
 	GLuint peakZ;
 	GLfloat landsc[64+1][64+1];
-GLfloat slope[64+1][64+1];
-GLfloat cd[64+1];
-GLfloat normals[64+1][64+1][3];
-GLfloat colors[64+1][64+1];
-GLfloat textures[64+1][64+1];
+	GLfloat slope[64+1][64+1];
+	GLfloat cd[64+1];
+	GLfloat normals[64+1][64+1][3];
+	GLfloat colors[64+1][64+1][3];
+	GLfloat textures[64+1][64+1];
 	GLuint grassTex;
 private:
 	void calculateColors(int size);

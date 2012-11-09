@@ -23,8 +23,6 @@
 #include <time.h>
   
 
-
-
 Terrain::Terrain()
 {
 
@@ -78,8 +76,13 @@ void Terrain::generateMap(int mapSize)
 
 void Terrain::calculateColors(int size)
 {
-
-
+	for(int x = 0 ; x < 64 ; x++)
+	{
+		for(int y =0; y< 64 ; y++)
+		{
+			 getColor(colors[x][y] , landsc[x][y]);
+		}
+	}
 }
 
 
@@ -92,13 +95,40 @@ void Terrain::calculateTextures(int size)
 			textures[x][y] = getTextureValue( x ,  y);
 		}
 	}
-
 }
 
 
 void Terrain::calculateNormals(int size)
 {
-
+	int i, j;
+	float v1[3],v2[3],out[3];
+	glColor3f(1.0, 1.0, 1.0);
+	v1[0] = cd[1];
+	v1[1] = 0;
+	v2[0] = 0;
+	v2[1] = cd[1];
+	for (j = 0; j < size; j++)
+      for (i = 0; i < size; i++) {
+		  v1[2] = landsc[i+1][j] - landsc[i][j];
+          v2[2] = landsc[i][j+1] - landsc[i][j];
+		  NormalHelper::normcrossprod(v1,v2,out);
+		  normals[i][j][0] = -out[0];
+		  normals[i][j][1] = -out[1];
+		  normals[i][j][2] = -out[2];
+	  }
+   for (j = 0; j < size; j++) {
+	  normals[size][j][0] = normals[size-1][j][0];
+      normals[size][j][1] = normals[size-1][j][1];
+      normals[size][j][2] = normals[size-1][j][2];
+	  }
+   for (i = 0; i < size; i++) {
+	  normals[i][size][0] = normals[i][size-1][0];
+	  normals[i][size][1] = normals[i][size-1][1];
+	  normals[i][size][2] = normals[i][size-1][2];
+	  }
+   normals[size][size][0] = normals[size-1][size-1][0];
+   normals[size][size][1] = normals[size-1][size-1][1];
+   normals[size][size][2] = normals[size-1][size-1][2];
 
 }
 
@@ -116,52 +146,12 @@ void Terrain::calculateSlopes(int size)
 
 void Terrain::getTexture(int x , int y)
 {
-	if(slope[x][y] < 0.4f)
-	{
-		if( landsc[x][y] < 0.2f)
-		{
-			glBindTexture(GL_TEXTURE_2D, grassTex);
-		}
-		else
-		{
-			glBindTexture(GL_TEXTURE_2D, grassTex);
-		}
-	}
-	else if (slope[x][y] < 1.0f)
-	{
-		if( landsc[x][y] < 0.2f)
-		{
-			glBindTexture(GL_TEXTURE_2D, rockTex);
-		}
-		else if ( landsc[x][y]  > 4)
-		{
-			glBindTexture(GL_TEXTURE_2D, grassTex);
-		}
-		else
-		{
-			glBindTexture(GL_TEXTURE_2D, rockTex);
-		}
-	}
-	else 
-	{
-		glBindTexture(GL_TEXTURE_2D, rockTex);
-	}
-
-	if( landsc[x][y] >= 4 )
-	{
-		glBindTexture(GL_TEXTURE_2D, rockTex);
-	}
+	glBindTexture(GL_TEXTURE_2D, textures[x][y]);
 }
-
 
 
 GLfloat Terrain::getTextureValue(int x , int y)
 {
-
-
-
-
-
 	if(slope[x][y] < 0.4f)
 	{
 		if( landsc[x][y] < 0.2f)
@@ -259,39 +249,11 @@ void Terrain::display(void)
 	glTranslated(0,0 ,0);
 	glScaled(scale ,scale ,scale);
 
-	int i, j;
-	float v1[3],v2[3],out[3];
-	glColor3f(1.0, 1.0, 1.0);
-	v1[0] = cd[1];
-	v1[1] = 0;
-	v2[0] = 0;
-	v2[1] = cd[1];
-	for (j = 0; j < size; j++)
-      for (i = 0; i < size; i++) {
-		  v1[2] = landsc[i+1][j] - landsc[i][j];
-          v2[2] = landsc[i][j+1] - landsc[i][j];
-		  NormalHelper::normcrossprod(v1,v2,out);
-		  normals[i][j][0] = -out[0];
-		  normals[i][j][1] = -out[1];
-		  normals[i][j][2] = -out[2];
-	  }
-   for (j = 0; j < size; j++) {
-	  normals[size][j][0] = normals[size-1][j][0];
-      normals[size][j][1] = normals[size-1][j][1];
-      normals[size][j][2] = normals[size-1][j][2];
-	  }
-   for (i = 0; i < size; i++) {
-	  normals[i][size][0] = normals[i][size-1][0];
-	  normals[i][size][1] = normals[i][size-1][1];
-	  normals[i][size][2] = normals[i][size-1][2];
-	  }
-   normals[size][size][0] = normals[size-1][size-1][0];
-   normals[size][size][1] = normals[size-1][size-1][1];
-   normals[size][size][2] = normals[size-1][size-1][2];
 
 
-   for (j = 0; j < size; j++)
-      for (i = 0; i < size; i++) {
+
+   for (int j = 0; j < size; j++)
+      for (int i = 0; i < size; i++) {
 		
 		  GLfloat color[3] = {0,0,0};
 		  getTexture( i,j);
@@ -315,18 +277,8 @@ void Terrain::display(void)
 
 void Terrain::drawVertex(int i , int j)
 {
-	GLfloat color[3] = {0,0,0};
-	
-	getColor(color , landsc[i][j]);
-	glColor3f(color[0], color[1], color[2]);	  glNormal3fv(&normals[i][j][0]);   glTexCoord2f(0,0);glVertex3f(cd[i],cd[j],-landsc[i][j]);
-		  
-	getColor(color , landsc[i+1][j]);
-	glColor3f(color[0], color[1], color[2]);	  glNormal3fv(&normals[i+1][j][0]);  glTexCoord2f(1,0); glVertex3f(cd[i+1],cd[j],-landsc[i+1][j]);
-		  
-	getColor(color , landsc[i+1][j+1]);
-	glColor3f(color[0], color[1], color[2]);	  glNormal3fv(&normals[i+1][j+1][0]); glTexCoord2f(1,1); glVertex3f(cd[i+1],cd[j+1],-landsc[i+1][j+1]);
-		  
-	getColor(color , landsc[i][j+1]);
-	glColor3f(color[0], color[1], color[2]);	  glNormal3fv(&normals[i][j+1][0]); glTexCoord2f(0,1); glVertex3f(cd[i],cd[j+1],-landsc[i][j+1]);
-
+	glColor3f(colors[i][j][0], colors[i][j][1], colors[i][j][2]);				glNormal3fv(&normals[i][j][0]);		glTexCoord2f(0,0);glVertex3f(cd[i],cd[j],-landsc[i][j]);
+	glColor3f(colors[i+1][j][0], colors[i+1][j][1], colors[i+1][j][2]);			glNormal3fv(&normals[i+1][j][0]);	glTexCoord2f(1,0); glVertex3f(cd[i+1],cd[j],-landsc[i+1][j]);
+	glColor3f(colors[i+1][j+1][0], colors[i+1][j+1][1], colors[i+1][j+1][2]);	glNormal3fv(&normals[i+1][j+1][0]); glTexCoord2f(1,1); glVertex3f(cd[i+1],cd[j+1],-landsc[i+1][j+1]);
+	glColor3f(colors[i][j+1][0], colors[i][j+1][1], colors[i][j+1][2]);			glNormal3fv(&normals[i][j+1][0]);	glTexCoord2f(0,1); glVertex3f(cd[i],cd[j+1],-landsc[i][j+1]);
 }

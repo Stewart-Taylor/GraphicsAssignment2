@@ -7,7 +7,6 @@
  * Last Updated: 08/11/2012
 */
 
-
 #include "Shrub.h"
 #include "TextureLoader.h"
 
@@ -15,7 +14,6 @@
 #include <stdio.h>	
 #include <freeglut.h>
 #include <math.h>
-
 
 
 Shrub::Shrub()
@@ -37,13 +35,10 @@ Shrub::Shrub(GLfloat x , GLfloat y , GLfloat z , GLuint texID)
 	
 	texName = texID;
 
-
 	xAngle = (rand()% 30) - (rand()% 30);
 	zAngle = (rand()% 360);
 	zAngle = (rand()% 30) - (rand()% 30);
 	height = (rand()% 5) + 3;
-
-
 
 	leaves = (rand()% 4) +1;
 }
@@ -68,9 +63,6 @@ void Shrub::display(void)
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 	glBindTexture(GL_TEXTURE_2D, texName);
 
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
-
 	glMatrixMode(GL_MODELVIEW);
 
 	glTranslated(xPosition ,yPosition ,zPosition);
@@ -79,7 +71,6 @@ void Shrub::display(void)
 	glRotatef(zAngle, 0.0, 0.0, 1.0);
 	glTranslated(0,0 ,0);
 	glScaled(scale ,scale ,scale);
-
 
 	tree();
 
@@ -93,8 +84,6 @@ void Shrub::display(void)
 
 void Shrub::tree()
 {
-	
-	
 	//Palms
 	glColor3f(1, 1, 1);
 
@@ -127,9 +116,6 @@ void Shrub::tree()
 		glTexCoord2f(1.0, 0.0);	 glVertex3f(0.0f, 0.14 , 1.0f);		
 		glTexCoord2f(0.0, 1.0);	 glVertex3f( 0.0f, 0.12 , -1.0f);		
 		glEnd();
-	
-
-
 }
 
 
