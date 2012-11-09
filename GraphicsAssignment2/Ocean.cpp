@@ -8,9 +8,6 @@
 */
 #include "Ocean.h"
 #include "TextureLoader.h"
-
-#include <windows.h>	
-#include <stdio.h>	
 #include <freeglut.h>
 #include <math.h>
 #include "NormalHelper.h"

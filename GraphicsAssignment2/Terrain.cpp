@@ -24,9 +24,6 @@ Terrain::Terrain(int size)
 	xPosition = -15;
 	yPosition = 0;
 	zPosition = -15;
-	xAngle = 90;
-	yAngle = 0;
-	zAngle = 0;
 	scale = 0.5;
 
 	grassTex = TextureLoader::loadTexture("Textures\\grass.bmp");
@@ -216,10 +213,7 @@ void Terrain::display(void)
 	glMatrixMode(GL_MODELVIEW);
 
 	glTranslated(xPosition ,yPosition ,zPosition);
-	glRotatef(xAngle, 1.0, 0.0, 0.0);
-	glRotatef(yAngle, 0.0, 1.0, 0.0);
-	glRotatef(zAngle, 0.0, 0.0, 1.0);
-	glTranslated(0,0 ,0);
+	glRotatef(90, 1.0, 0.0, 0.0);
 	glScaled(scale ,scale ,scale);
 
    for (int j = 10; j < 54; j++)

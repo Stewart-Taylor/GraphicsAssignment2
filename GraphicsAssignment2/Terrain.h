@@ -1,10 +1,8 @@
 #include <freeglut.h>
-#include <math.h>
 
 #pragma once
 class Terrain
 {
-
 public:
 	Terrain(void);
 	Terrain(int sizeT);
@@ -34,9 +32,6 @@ private:
 	GLfloat xPosition;
 	GLfloat yPosition;
 	GLfloat zPosition;
-	GLfloat xAngle;
-	GLfloat yAngle;
-	GLfloat zAngle;
 	GLfloat scale;
 	GLuint sandTex;
 	GLuint rockTex;
