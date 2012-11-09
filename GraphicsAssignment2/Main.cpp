@@ -25,9 +25,6 @@
 #include "ParticleManager.h"
 #include "TextureLoader.h"
 #include "FoilageGenerator.h"
-
-#include <math.h>
-#include <stdlib.h>
 #include <freeglut.h>
 #include <fstream>
 #include <iostream>
@@ -38,8 +35,7 @@ Camera camera = Camera();
 SkyBox skybox;
 Plane plane;
 Ocean ocean;
-LTree tree;
-Terrain terrain ;
+Terrain terrain;
 ParticleManager particleManager;
 LTree trees[800];
 Shrub shrubs[800];
@@ -48,7 +44,6 @@ FoilageGenerator foilageGenerator;
 GLfloat specular = 1.0;
 GLfloat diffuse = 0.5;
 GLfloat shiny = 50.0;
-
 GLfloat light_position[] = { 56.0 , 20.0 ,9.0 , 1.0};
 GLfloat mat_specular[] = { specular, specular, specular, 1.0 };
 GLfloat mat_diffuse[] = { diffuse, diffuse, 0.5, 1.0 };
@@ -71,7 +66,6 @@ void setObjects(void)
 	terrain = Terrain(64);
 	particleManager = ParticleManager(0 , 0 , 0); 
 	ocean = Ocean(64);
-	tree.setAngle(0,90,0);
 	
 	generateMap();
 }
@@ -138,12 +132,14 @@ void display (void)
 		if(trees[i].yPosition != -4) // only draws assigned trees - 4 is default not assigned 
 		{
 			trees[i].display();
+		}
+
+		if(shrubs[i].yPosition != -4) // only draws assigned trees - 4 is default not assigned 
+		{
 			shrubs[i].display();
 		}
 	}
 
-
-	
 	glutSwapBuffers();
 }
 
@@ -186,7 +182,7 @@ void idle(void)
 
 void printInfo()
 {
-	std::cout << "	3D Procedural Generation" << std::endl << std::endl;
+	std::cout << "	3D Procedural Volcanic Island" << std::endl << std::endl;
 	std::cout << "	Created by Stewart Taylor" << std::endl << std::endl;
 	std::cout << "-------------------------------------" << std::endl;
 	std::cout << "CONTROLS" << std::endl;
@@ -212,7 +208,7 @@ int main (int argc, char **argv)
 	glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
     glutInitWindowSize (600, 600); 
     glutInitWindowPosition (200, 100);
-    glutCreateWindow ("3D Procedural Generation"); 
+    glutCreateWindow ("3D Procedural Volcanic Island"); 
     init (); 
     glutDisplayFunc (display); 
     glutIdleFunc (idle); 
