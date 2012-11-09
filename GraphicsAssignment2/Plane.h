@@ -11,9 +11,5 @@ private:
 	GLfloat xPosition;
 	GLfloat yPosition;
 	GLfloat zPosition;
-	GLfloat xAngle;
-	GLfloat yAngle;
-	GLfloat zAngle;
 	GLfloat scale;
-	GLuint texName;
 };
